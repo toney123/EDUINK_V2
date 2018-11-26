@@ -1,3 +1,6 @@
+/**
+ * 通告页
+ */
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
 

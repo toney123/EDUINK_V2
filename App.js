@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
 import { createStackNavigator,createAppContainer,createDrawerNavigator  } from 'react-navigation';
-import StartPage from './js/page/StartPage';
-import BottomTabBar from './js/common/global/BottomTabBar';
-import HomePage from './js/page/HomePage';
+import StartPage from './js/page/start-page';
+import BottomTabBar from './js/common/global/bottom-tab-bar';
+import HomePage from './js/page/home-page';
 
 
 const AppNavigator = createStackNavigator({

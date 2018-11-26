@@ -1,36 +1,14 @@
+/**
+ * 全局底栏
+ */
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,} from 'react-native';
 import TabNavigator from 'react-native-tab-navigator';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import HomePage from '../../page/HomePage';
-import ChatPage from '../../page/ChatPage';
-import NoticePage from '../../page/NoticePage';
-import MorePage from '../../page/MorePage';
-import { createAppContainer,createDrawerNavigator,DrawerItems  } from 'react-navigation';
-
-
-const HomeDrawer = createDrawerNavigator({
-    all:{
-        screen:HomePage
-    },
-    other:{
-        screen:HomePage
-    }
-},{
-    initialRouteName:'all',
-    contentComponent:((props)=>{
-        return (
-            <View>
-                <DrawerItems {...props} onItemPress={(itemProps)=>{
-                    props.navigation.navigate(itemProps.route.key,{childName:itemProps.route.key});
-                }} />
-            </View>
-        );
-    }),
-});
-
-const HomeContainer = createAppContainer(HomeDrawer);
-
+import HomePage from '../../page/home-page';
+import ChatPage from '../../page/chat-page';
+import NoticePage from '../../page/notice-page';
+import MorePage from '../../page/more-page';
 
 
 export default class BottomTabBar extends Component{
@@ -72,7 +50,7 @@ export default class BottomTabBar extends Component{
                         renderIcon={() => <Icon name="home" size={25} />}
                         renderSelectedIcon={() => <Icon name="home" size={25} color='#597EF7' />}
                         onPress={() => this.setState({ selectedTab: 'Home' })}>
-                        <HomeContainer />
+                        <HomePage />
                     </TabNavigator.Item>
                     {/* 聊天页 */}
                     <TabNavigator.Item

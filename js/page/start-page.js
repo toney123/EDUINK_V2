@@ -1,19 +1,15 @@
+/**
+ * 启动页
+ */
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
 
-
-export default class ChatPage extends Component{
-
-    constructor(props){
-        super(props);
-    }
-
+export default class StartPage extends Component{
     render(){
         return(
             <View>
-                <Text>chat</Text>
+                <Text>start</Text>
             </View>
         );
     }
 }
-
