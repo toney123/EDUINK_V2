@@ -4,42 +4,9 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,StatusBar,TouchableOpacity,Dimensions} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import ScrollableTabView  from 'react-native-scrollable-tab-view';
 import SideMenu from 'react-native-side-menu';
 import LeftDrawer from '../common/home/left-drawer';
-
-const AllTabView = ()=>{
-    return (
-        <View style={{flex:1}}>
-            <Text>all</Text>
-        </View>
-    );
-};
-
-const NoticeTabView = ()=>{
-    return (
-        <View style={{flex:1}}>
-            <Text>notice</Text>
-        </View>
-    );
-};
-
-const NewsTabView = ()=>{
-    return (
-        <View style={{flex:1}}>
-            <Text>news</Text>
-        </View>
-    );
-};
-
-const PhotoTabView = ()=>{
-    return (
-        <View style={{flex:1}}>
-            <Text>photo</Text>
-        </View>
-    );
-};
-
+import TopTabView from '../common/home/TopTab/top-tab-view';
 
 export default class HomePage extends Component{
 
@@ -53,8 +20,6 @@ export default class HomePage extends Component{
 
         this.showLeftBar = this.showLeftBar.bind(this);
         this.updateState = this.updateState.bind(this);
-
-        // this.childName = this.props.navigation.getParam('childName')==undefined ? 'All Childen': this.props.navigation.getParam('childName');
     }
 
     showLeftBar(){
@@ -114,25 +79,7 @@ export default class HomePage extends Component{
                         </View>
                     </View>
                     <View style={styles.labelBar}> 
-                            
-                        <ScrollableTabView 
-                            tabBarActiveTextColor='#42436A'
-                            tabBarUnderlineStyle = {{
-                                backgroundColor:'#42436A',
-                                height:2,
-                                
-                            }}
-                            tabBarBackgroundColor = '#F6F9FF'
-                            tabBarInactiveTextColor='#8F9FB3'
-                            style = {{
-                                
-                            }}
-                        >
-                            <AllTabView tabLabel='ALL' />
-                            <NoticeTabView tabLabel='NOTICE' />
-                            <NewsTabView tabLabel='NEWS' />
-                            <PhotoTabView tabLabel='PHOTO' />
-                        </ScrollableTabView>
+                        <TopTabView />    
                     </View>
                 
                 </SideMenu> 
