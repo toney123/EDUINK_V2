@@ -2,7 +2,7 @@
  * 全局底栏
  */
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View,} from 'react-native';
+import {Platform, StyleSheet, Text, View,Image} from 'react-native';
 import TabNavigator from 'react-native-tab-navigator';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import HomePage from '../../page/home-page';
@@ -47,8 +47,8 @@ export default class BottomTabBar extends Component{
                     {/* 主页 */}
                     <TabNavigator.Item
                         selected={this.state.selectedTab === 'Home'}
-                        renderIcon={() => <Icon name="home" size={25} />}
-                        renderSelectedIcon={() => <Icon name="home" size={25} color='#597EF7' />}
+                        renderIcon={() => <Image style={{width:25,height:25}} source={require('../../../res/icon/content.png')} />}
+                        renderSelectedIcon={() => <Image style={{width:25,height:25}} source={require('../../../res/icon/content-selected.png')} />}
                         onPress={() => this.setState({ selectedTab: 'Home' })}>
                         <HomePage />
                     </TabNavigator.Item>
@@ -56,24 +56,23 @@ export default class BottomTabBar extends Component{
                     <TabNavigator.Item
                         selected={this.state.selectedTab === 'Chat'}
                         // title="Chat"
-                        renderIcon={() => <Icon name="comments" size={25} />}
-                        renderSelectedIcon={() => <Icon name="comments" size={25} color='#597EF7' />}
+                        renderIcon={() => <Image style={{width:24,height:25}} source={require('../../../res/icon/chat.png')} />}
+                        renderSelectedIcon={() => <Image style={{width:24,height:25}} source={require('../../../res/icon/chat-selected.png')} />}
                         onPress={() => this.setState({ selectedTab: 'Chat' })}>
                         <ChatPage/>
                     </TabNavigator.Item>
                     {/* 抽屉 */}
                     <TabNavigator.Item
                         // title="drawer"
-                        renderIcon={() => <Icon name="plus-square" size={25} color='#597EF7' />}
-                        renderSelectedIcon={() => <Icon name="plus-square" size={25} color='#597EF7' />}
+                        renderIcon={() => <Image style={{width:25,height:25}} source={require('../../../res/icon/add.png')} />}
                         onPress={this.onClickDrawer}>
                     </TabNavigator.Item>
                     {/* 通告页 */}
                     <TabNavigator.Item
                         selected={this.state.selectedTab === 'Notice'}
                         // title="Notice"
-                        renderIcon={() => <Icon name="bell" size={25} />}
-                        renderSelectedIcon={() => <Icon name="bell" size={25} color='#597EF7' />}
+                        renderIcon={() => <Image style={{width:25,height:25}} source={require('../../../res/icon/notice.png')} />}
+                        renderSelectedIcon={() => <Image style={{width:25,height:25}} source={require('../../../res/icon/notice-selected.png')} />}
                         onPress={() => this.setState({ selectedTab: 'Notice' })}>
                         <NoticePage/>
                     </TabNavigator.Item>
@@ -81,8 +80,8 @@ export default class BottomTabBar extends Component{
                     <TabNavigator.Item
                         selected={this.state.selectedTab === 'More'}
                         // title="more"
-                        renderIcon={() => <Icon name="ellipsis-h" size={25} />}
-                        renderSelectedIcon={() => <Icon name="ellipsis-h" size={25} color='#597EF7' />}
+                        renderIcon={() => <Image style={{width:25,height:25}} source={require('../../../res/icon/more.png')} />}
+                        renderSelectedIcon={() => <Image style={{width:25,height:25}} source={require('../../../res/icon/more-selected.png')} />}
                         onPress={() => this.setState({ selectedTab: 'More' })}>
                         <MorePage/>
                     </TabNavigator.Item>

@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
         flex:1,
     },
     containerCenter:{
-        flex:13,
+        flex:19,
     },
     containerRight:{
         flex:1,
@@ -84,12 +84,18 @@ const styles = StyleSheet.create({
         borderColor:'#FFF',
         flexDirection:'row',
         marginBottom:25,
+        ...Platform.select({
+            android:{
+                elevation:5,
+            }
+        }),
     },
     previewContentLeft:{
         flex:1,
     },
     previewContentCenter:{
         flex:12,
+        
     },
     previewContentRight:{
         flex:1,

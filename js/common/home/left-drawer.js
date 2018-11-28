@@ -4,95 +4,19 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,StatusBar,TouchableOpacity,Dimensions} from 'react-native';
 
-export default class LeftDrawer extends Component{
-
-    constructor(props){
-        super(props);
-    }
-
-
-    componentWillUpdate(){
-       
-    }
-
-
-    render(){
-        return(
-            <View style={styles.container}>
-                <View style={styles.containerTop}></View>
-                <View style={styles.containerCenter}>
-                    {/* 所有学生 */}
-                    <TouchableOpacity onPress={()=>{this.props.updateState(0)}}>
-                        <View style={styles.person}>
-                            <View style={styles.personLeft}>
-                                <View style={styles.avatar}>
-                                    <Text style={styles.avatarText}>ALL</Text>
-                                </View>
-                            </View>
-                            <View style={styles.personCenter}>
-                                <View style={styles.studentTop}>
-                                    <Text style={styles.studentName}>All Children</Text>
-                                </View>
-                                <View style={styles.studentBottom}>
-                                    <Text style={styles.studentClassName}>中六班</Text>
-                                </View>
-                            </View>
-                            <View style={styles.personRight}>
-                                <View style={styles.clickPerson}></View>
-                            </View>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>{this.props.updateState(1)}}>
-                        <View style={styles.person}>
-                            <View style={styles.personLeft}>
-                                <View style={styles.avatar}>
-                                    <Text style={styles.avatarText}>ALL</Text>
-                                </View>
-                            </View>
-                            <View style={styles.personCenter}>
-                                <View style={styles.studentTop}>
-                                    <Text style={styles.studentName}>Test Yu</Text>
-                                </View>
-                                <View style={styles.studentBottom}>
-                                    <Text style={styles.studentClassName}>中六班</Text>
-                                </View>
-                            </View>
-                            <View style={styles.personRight}>
-                                <View style={styles.clickPerson}></View>
-                            </View>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>{this.props.updateState(2)}}>
-                        <View style={styles.person}>
-                            <View style={styles.personLeft}>
-                                <View style={styles.avatar}>
-                                    <Text style={styles.avatarText}>ALL</Text>
-                                </View>
-                            </View>
-                            <View style={styles.personCenter}>
-                                <View style={styles.studentTop}>
-                                    <Text style={styles.studentName}>Test Li</Text>
-                                </View>
-                                <View style={styles.studentBottom}>
-                                    <Text style={styles.studentClassName}>中六班</Text>
-                                </View>
-                            </View>
-                            <View style={styles.personRight}>
-                                <View style={styles.clickPerson}></View>
-                            </View>
-                        </View>
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.containerBottom}></View>
-            </View>
-        );
-    };
-}
-
 const styles = StyleSheet.create({
     container:{
         flex:1,
         backgroundColor:'#FFF',
+        // ...Platform.select({
+        //     android:{
+        //         elevation:10,
+        //     }
+        // }),
+    },
+    containerBody:{
+        flex:1,
+        
     },
     containerTop:{
         flex:1,
@@ -153,3 +77,93 @@ const styles = StyleSheet.create({
         top:25,
     }
 });
+
+
+export default class LeftDrawer extends Component{
+
+    constructor(props){
+        super(props);
+    }
+
+
+    componentWillUpdate(){
+       
+    }
+
+
+    render(){
+        return(
+            <View style={styles.container}>
+                <View style={styles.containerBody}>
+                    <View style={styles.containerTop}></View>
+                    <View style={styles.containerCenter}>
+                        {/* 所有学生 */}
+                        <TouchableOpacity onPress={()=>{this.props.updateState(0)}}>
+                            <View style={styles.person}>
+                                <View style={styles.personLeft}>
+                                    <View style={styles.avatar}>
+                                        <Text style={styles.avatarText}>ALL</Text>
+                                    </View>
+                                </View>
+                                <View style={styles.personCenter}>
+                                    <View style={styles.studentTop}>
+                                        <Text style={styles.studentName}>All Children</Text>
+                                    </View>
+                                    <View style={styles.studentBottom}>
+                                        <Text style={styles.studentClassName}>中六班</Text>
+                                    </View>
+                                </View>
+                                <View style={styles.personRight}>
+                                    <View style={styles.clickPerson}></View>
+                                </View>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={()=>{this.props.updateState(1)}}>
+                            <View style={styles.person}>
+                                <View style={styles.personLeft}>
+                                    <View style={styles.avatar}>
+                                        <Text style={styles.avatarText}>ALL</Text>
+                                    </View>
+                                </View>
+                                <View style={styles.personCenter}>
+                                    <View style={styles.studentTop}>
+                                        <Text style={styles.studentName}>Test Yu</Text>
+                                    </View>
+                                    <View style={styles.studentBottom}>
+                                        <Text style={styles.studentClassName}>中六班</Text>
+                                    </View>
+                                </View>
+                                <View style={styles.personRight}>
+                                    <View style={styles.clickPerson}></View>
+                                </View>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={()=>{this.props.updateState(2)}}>
+                            <View style={styles.person}>
+                                <View style={styles.personLeft}>
+                                    <View style={styles.avatar}>
+                                        <Text style={styles.avatarText}>ALL</Text>
+                                    </View>
+                                </View>
+                                <View style={styles.personCenter}>
+                                    <View style={styles.studentTop}>
+                                        <Text style={styles.studentName}>Test Li</Text>
+                                    </View>
+                                    <View style={styles.studentBottom}>
+                                        <Text style={styles.studentClassName}>中六班</Text>
+                                    </View>
+                                </View>
+                                <View style={styles.personRight}>
+                                    <View style={styles.clickPerson}></View>
+                                </View>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={styles.containerBottom}></View>
+                </View>
+                
+            </View>
+        );
+    };
+}
+

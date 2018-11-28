@@ -5,6 +5,12 @@ const styles = StyleSheet.create({
     navigationBar:{
         flex:1,
         backgroundColor:"#FFF",
+        ...Platform.select({
+            android:{
+                elevation:5,
+            }
+        }),
+        
     },
     navigationBarIn:{
         flex:1,
@@ -23,7 +29,15 @@ const styles = StyleSheet.create({
     },
 });
 
+
+
 export default class TopNavBar extends Component{
+
+    constructor(props){
+        super(props);
+    }
+
+
     render(){
         return(
             <View style={styles.navigationBar}>
@@ -32,6 +46,7 @@ export default class TopNavBar extends Component{
                     backgroundColor='#FFF'
                     animated={true}
                 />
+                
                 <View style={styles.navigationBarIn}>
                     <View style={styles.navigationLeft}>
                         {this.props.topNavBarLeft}
