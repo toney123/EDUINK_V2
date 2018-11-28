@@ -7,6 +7,27 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import SideMenu from 'react-native-side-menu';
 import LeftDrawer from '../common/home/left-drawer';
 import TopTabView from '../common/home/TopTab/top-tab-view';
+import TopNavBar from '../common/global/top-nav-bar';
+
+const styles = StyleSheet.create({
+    container:{
+        flex:1,
+    },
+    TopNavBar:{
+        flex:1,
+    },
+    labelBar:{
+        flex:12,
+        backgroundColor:'#F6F9FF'
+    },
+    topNavBarCenterText:{
+        textAlign:'center',
+        fontSize:18
+    },
+    topNavBarLeftIcon:{
+        left:20,
+    },  
+});
 
 export default class HomePage extends Component{
 
@@ -53,77 +74,34 @@ export default class HomePage extends Component{
 
         return(
             <View style={styles.container}>
+                {/* 侧栏 */}
                 <SideMenu
                     menu={<LeftDrawer updateState={this.updateState} />}
                     openMenuOffset={Dimensions.get('window').width / 1.5}
                     isOpen={this.state.sideMenuStatus}
                     menuPosition='left'
                 >    
-                    <StatusBar
-                        barStyle='dark-content' 
-                        backgroundColor='#FFF'
-                        animated={true}
+                    {/* 导航栏(内含状态栏) */}
+                    <TopNavBar
+                        sytle={styles.TopNavBar} 
+                        topNavBarLeft={
+                            <TouchableOpacity style={styles.topNavBarLeftIcon} onPress={this.showLeftBar}>
+                                <Icon name='bars' size={20} color='#4A98F7'></Icon>
+                            </TouchableOpacity>
+                        }
+                        topNavBarCenter={
+                            <Text style={styles.topNavBarCenterText}>{chilName}</Text>
+                        }
                     />
-                    <View style={styles.navigationBar}>
-                        <View style={styles.navigationBarIn}>
-                            <View style={styles.navigationLeft}>
-                                <TouchableOpacity style={styles.navigationLeftBar} onPress={this.showLeftBar}>
-                                    <Icon name='bars' size={20} color='#4A98F7'></Icon>
-                                </TouchableOpacity>
-                            </View>
-                            <View style={styles.navigationCenter}>
-                                <Text style={styles.navigationCenterText}>{chilName}</Text>
-                            </View>
-                            <View style={styles.navigationRight}>
-                            </View>
-                        </View>
-                    </View>
                     <View style={styles.labelBar}> 
+                        {/* 选项栏 */}
                         <TopTabView />    
                     </View>
-                
-                </SideMenu> 
-        
-                
+                </SideMenu>  
             </View>
         );
     }
 }
 
-const styles = StyleSheet.create({
-    container:{
-        flex:1,
-    },
-    navigationBar:{
-        flex:1,
-        backgroundColor:"#FFF",
-        
-    },
-    navigationBarIn:{
-        flex:1,
-        flexDirection:'row',
-        top:10,
-    },
-    navigationLeft:{
-        flex:1,
-        top:3,
-    },
-    navigationLeftBar:{
-        left:20,
-    },  
-    navigationCenter:{
-        flex:2,
-    },
-    navigationCenterText:{
-        textAlign:'center',
-        fontSize:18
-    },
-    navigationRight:{
-        flex:1,
-    },
-    labelBar:{
-        flex:10,
-        backgroundColor:'#F6F9FF'
-    },
-});
+
 
