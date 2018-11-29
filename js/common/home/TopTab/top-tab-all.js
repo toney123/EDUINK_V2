@@ -118,7 +118,6 @@ export default class TopTabALL extends Component{
 
     constructor(props){
         super(props);
-        this._onScroll = this._onScroll.bind(this);
     }
 
 
