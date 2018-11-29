@@ -1,65 +1,15 @@
+/**
+ * 主页里的选项栏all
+ */
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,TouchableOpacity,Image,FlatList} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const contents = [
-    {id:1,title:'12345645646'},
-    {id:2,title:'12345645646'},
-    {id:3,title:'12345645646'},
+    {id:1,type:'News',title:'Help and inspire fellow designers by...',icon:require('../../../../res/icon/list-news.png')},
+    {id:2,type:'Notice',title:'Help and inspire fellow designers by...',icon:require('../../../../res/icon/list-notice.png')},
+    {id:3,type:'News',title:'Help and inspire fellow designers by...',icon:require('../../../../res/icon/list-news.png')},
 ];
-
-export default class TopTabALL extends Component{
-    render(){
-        return (
-            <FlatList 
-                data={contents}
-                // 设置自定义key，消除警告
-                keyExtractor={(item)=>item.title}
-                renderItem={({item})=>{
-                    return (
-                        <View style={styles.container}>
-                            <View style={styles.containerLeft}></View>
-                            <View style={styles.containerCenter}>
-                                <View style={styles.previewContent}>
-                                    <View style={styles.previewContentLeft}></View>
-                                    <TouchableOpacity style={styles.previewContentCenter}>
-                                        <View style={styles.contentType}>
-                                            <View style={styles.contentTypeLeft}>
-                                                <View style={styles.contentTypeLeftMain}>
-                                                    <Icon style={styles.contentTypeLeftIcon} name='envelope-open' />
-                                                    <Text style={styles.contentTypeLeftText}>News</Text>
-                                                </View>
-                                            </View>
-                                            <View style={styles.contentTypeRight}>
-                                                <View style={styles.contentTypeRightName}>
-                                                    <Text style={styles.contentTypeRightNameText}>TY</Text>
-                                                </View>
-                                            </View>
-                                        </View>
-                                        <View style={styles.contentText}>
-                                            <Text style={styles.contentTextTitle}>{item.title}</Text>
-                                        </View>
-                                        <View style={styles.contentImage}>
-                                            <Image style={styles.contentImagePreview}>
-
-                                            </Image>
-                                        </View>
-                                        <View style={styles.contentTime}>
-                                            <Text style={styles.contentTimeText}>11-27 17:00</Text>
-                                        </View>
-                                    </TouchableOpacity>
-                                    <View style={styles.previewContentRight}></View>
-                                </View>
-                            </View>
-                            <View style={styles.containerRight}></View>
-                        </View>
-                        );
-                    }}
-            />
-                
-        );
-    }
-}
 
 const styles = StyleSheet.create({
     container:{
@@ -78,17 +28,17 @@ const styles = StyleSheet.create({
     previewContent:{
         top:10,
         borderWidth:1,
-        height:200,
+        height:280,
         borderRadius:5,
         backgroundColor:'#FFF',
         borderColor:'#FFF',
         flexDirection:'row',
         marginBottom:25,
-        ...Platform.select({
-            android:{
-                elevation:5,
-            }
-        }),
+        // ...Platform.select({
+        //     android:{
+        //         elevation:1,
+        //     }
+        // }),
     },
     previewContentLeft:{
         flex:1,
@@ -101,7 +51,7 @@ const styles = StyleSheet.create({
         flex:1,
     },
     contentType:{
-        flex:1,
+        flex:2,
         flexDirection:'row'
     },
     contentTypeLeft:{
@@ -114,7 +64,8 @@ const styles = StyleSheet.create({
         top:15,
     },
     contentTypeLeftIcon:{
-        top:3,
+        width:20,
+        height:20,
     },
     contentTypeLeftText:{
         left:15,
@@ -139,19 +90,88 @@ const styles = StyleSheet.create({
         fontSize:10,
     },
     contentText:{
-        flex:1,
+        flex:2,
     },
     contentTextTitle:{
-        top:10,
+        top:8,
     },
     contentImage:{
-        flex:4,
+        flex:7,
+    },
+    contentImagePreview:{
+        width:'100%',
+        height:'100%',
+        borderRadius:3,
     },
     contentTime:{
-        flex:1,
+        flex:2,
     },
     contentTimeText:{
+        top:15,
         fontSize:10,
         color:'#CCCCCC'
     }
 });
+
+
+export default class TopTabALL extends Component{
+
+    constructor(props){
+        super(props);
+        this._onScroll = this._onScroll.bind(this);
+    }
+
+
+    render(){
+        return (
+            <FlatList 
+                data={contents}
+                // 设置自定义key，消除警告
+                keyExtractor={(item)=>item.title}
+                renderItem={({item})=>{
+                    return (
+                        <View style={styles.container}>
+                            <View style={styles.containerLeft}></View>
+                            <View style={styles.containerCenter}>
+                                <View style={styles.previewContent}>
+                                    <View style={styles.previewContentLeft}></View>
+                                    <TouchableOpacity style={styles.previewContentCenter}>
+                                        <View style={styles.contentType}>
+                                            <View style={styles.contentTypeLeft}>
+                                                <View style={styles.contentTypeLeftMain}>
+                                                    <Image style={styles.contentTypeLeftIcon} source={item.icon} />
+                                                    <Text style={styles.contentTypeLeftText}>{item.type}</Text>
+                                                </View>
+                                            </View>
+                                            <View style={styles.contentTypeRight}>
+                                                <View style={styles.contentTypeRightName}>
+                                                    <Text style={styles.contentTypeRightNameText}>TY</Text>
+                                                </View>
+                                            </View>
+                                        </View>
+                                        <View style={styles.contentText}>
+                                            <Text style={styles.contentTextTitle}>{item.title}</Text>
+                                        </View>
+                                        <View style={styles.contentImage}>
+                                            <Image 
+                                                style={styles.contentImagePreview} 
+                                                source={{uri: "https://facebook.github.io/react-native/img/favicon.png"}} 
+                                            />
+                                        </View>
+                                        <View style={styles.contentTime}>
+                                            <Text style={styles.contentTimeText}>11-27 17:00</Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                    <View style={styles.previewContentRight}></View>
+                                </View>
+                            </View>
+                            <View style={styles.containerRight}></View>
+                        </View>
+                        );
+                    }}
+            />
+                
+        );
+    }
+}
+

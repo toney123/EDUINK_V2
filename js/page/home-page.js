@@ -2,7 +2,7 @@
  * 主页
  */
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View,StatusBar,TouchableOpacity,Dimensions} from 'react-native';
+import {Platform, StyleSheet, Text, View,StatusBar,TouchableOpacity,Dimensions,Image} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SideMenu from 'react-native-side-menu';
 import LeftDrawer from '../common/home/left-drawer';
@@ -25,7 +25,8 @@ const styles = StyleSheet.create({
         fontSize:18
     },
     topNavBarLeftIcon:{
-        left:20,
+        left:5,
+        bottom:10,
     },  
 });
 
@@ -86,7 +87,7 @@ export default class HomePage extends Component{
                         sytle={styles.TopNavBar} 
                         topNavBarLeft={
                             <TouchableOpacity style={styles.topNavBarLeftIcon} onPress={this.showLeftBar}>
-                                <Icon name='bars' size={20} color='#4A98F7'></Icon>
+                                <Image style={{width:40,height:40}} source={require('../../res/icon/list.png')} />
                             </TouchableOpacity>
                         }
                         topNavBarCenter={

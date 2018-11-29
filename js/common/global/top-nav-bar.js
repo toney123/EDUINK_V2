@@ -5,11 +5,11 @@ const styles = StyleSheet.create({
     navigationBar:{
         flex:1,
         backgroundColor:"#FFF",
-        ...Platform.select({
-            android:{
-                elevation:5,
-            }
-        }),
+        // ...Platform.select({
+        //     android:{
+        //         elevation:10,
+        //     }
+        // }),
         
     },
     navigationBarIn:{

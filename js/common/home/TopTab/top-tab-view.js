@@ -1,3 +1,7 @@
+/**
+ * 主页里的选项栏主入口
+ */
+
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,TouchableOpacity,Dimensions,ScrollView,FlatList} from 'react-native';
 import TopTabALL from './top-tab-all';
