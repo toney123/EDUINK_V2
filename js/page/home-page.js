@@ -3,7 +3,6 @@
  */
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,StatusBar,TouchableOpacity,Dimensions,Image} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import SideMenu from 'react-native-side-menu';
 import LeftDrawer from '../common/home/left-drawer';
 import TopTabView from '../common/home/TopTab/top-tab-view';
@@ -37,19 +36,19 @@ export default class HomePage extends Component{
         this.state = {
             sideMenuStatus:false,
             currentChildId:0,
-            childName:''
         }
-
-        this.showLeftBar = this.showLeftBar.bind(this);
+        this._updateLeftBarStatus = this._updateLeftBarStatus.bind(this);
         this.updateState = this.updateState.bind(this);
+       
     }
 
-    showLeftBar(){
+    // 更新侧栏
+    _updateLeftBarStatus(){
         this.setState({
             sideMenuStatus:!this.state.sideMenuStatus,
         });
     }
-
+    // 提供给子组件来更新父组件的state
     updateState(id){
         this.setState({
             sideMenuStatus:!this.state.sideMenuStatus,
@@ -57,8 +56,18 @@ export default class HomePage extends Component{
         });
     }
 
+    // 修正侧栏开关状态(若SideMenu关闭时与state不一致，则修正)
+    _reviseSideMenuStatus(isOpen){
+        if(isOpen != this.state.sideMenuStatus){
+            this.setState({
+                sideMenuStatus:isOpen
+            });
+        }
+    }
+    
+
     componentWillUpdate(){
-        
+       
     }
 
 
@@ -77,16 +86,17 @@ export default class HomePage extends Component{
             <View style={styles.container}>
                 {/* 侧栏 */}
                 <SideMenu
+                    // 侧栏主体内容
                     menu={<LeftDrawer updateState={this.updateState} />}
                     openMenuOffset={Dimensions.get('window').width / 1.5}
                     isOpen={this.state.sideMenuStatus}
-                    menuPosition='left'
+                    onChange={(isOpen)=>{this._reviseSideMenuStatus(isOpen)}}
                 >    
                     {/* 导航栏(内含状态栏) */}
                     <TopNavBar
                         sytle={styles.TopNavBar} 
                         topNavBarLeft={
-                            <TouchableOpacity style={styles.topNavBarLeftIcon} onPress={this.showLeftBar}>
+                            <TouchableOpacity style={styles.topNavBarLeftIcon} onPress={this._updateLeftBarStatus}>
                                 <Image style={{width:40,height:40}} source={require('../../res/icon/list.png')} />
                             </TouchableOpacity>
                         }
