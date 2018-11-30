@@ -64,6 +64,7 @@ export default class TopTabView extends Component{
         this.setState({
             selectTabIndex:index
         });
+        // 跳转至指定的选项页
         this.refs.scrollTabView.scrollToOffset({
             offset:index*screenWidth,
             // 动画
@@ -71,9 +72,19 @@ export default class TopTabView extends Component{
         });
     }
 
-
+    // tab view滚动结束时
     _scrollEnd(e){
-        console.warn(e.nativeEvent.contentOffset.x)
+        // 获取偏移量，如偏移量大于选项页的一半，则进一页，否则就退一页
+        let offsetIndex = (e.nativeEvent.contentOffset.x / screenWidth).toFixed(0);
+        // 更新当前选择的tab
+        this.setState({
+            selectTabIndex:offsetIndex
+        });
+        this.refs.scrollTabView.scrollToOffset({
+            offset:offsetIndex * screenWidth,
+            // 动画
+            animated: true,
+        });
     }
 
 
