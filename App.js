@@ -1,40 +1,40 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
-import {createStackNavigator,createAppContainer} from 'react-navigation';
+import {Platform, StyleSheet, Text, View,AsyncStorage} from 'react-native';
+import {createStackNavigator,createAppContainer,createSwitchNavigator } from 'react-navigation';
 import StartPage from './js/page/start-page';
 import BottomTabBar from './js/common/global/bottom-tab-bar';
+import LoginPage from './js/page/login-page';
+import ForgetPasswordPage from './js/page/forget-password-page';
 
 
-const AppNavigator = createStackNavigator({
-  BottomTabBar: {
+// StackNavigator，允许返回
+const MainStack = createStackNavigator({
+  Main: {
     screen: BottomTabBar,
     navigationOptions:()=>({
       header:null
     })
   },
-  Start: {
-    screen: StartPage,
-    navigationOptions:()=>({
-      header:null
-    })
-  },
-},{
-  initialRouteName:'BottomTabBar',
 });
 
-const AppContainer = createAppContainer(AppNavigator);
+// SwitchNavigator单页，忽略返回
+export default createAppContainer(createSwitchNavigator({
+  Login:{
+    screen:LoginPage,
+  },
+  Start: {
+    screen:StartPage,
+  },
+  ForgetPassword:{
+    screen:ForgetPasswordPage
+  },
+  Main:{
+    screen:MainStack
+  },
+},
+  {
+  initialRouteName:'Start'
+}));
 
-
-export default class App extends Component {
-  constructor(props){
-    super(props);
-  }
-
-  render() {
-    return (
-      <AppContainer />
-    );
-  }
-}
 
 
