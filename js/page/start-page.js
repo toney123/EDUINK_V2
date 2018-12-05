@@ -80,6 +80,9 @@ export default class StartPage extends Component{
             let responseJson = JSON.parse(response._bodyText);
             let responseStatus = response.status;
 
+            global.appId = responseJson.appId;
+            global.token = responseJson.sessionToken;
+
             let message;
             let routeName;
             switch(responseStatus){
