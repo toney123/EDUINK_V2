@@ -6,9 +6,9 @@ import {Platform, StyleSheet, Text, View,TouchableOpacity,Image,FlatList} from '
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const contents = [
-    {id:1,type:'News',title:'Help and inspire fellow designers by...',icon:require('../../../../res/icon/list-news.png')},
-    {id:2,type:'Notice',title:'Help and inspire fellow designers by...',icon:require('../../../../res/icon/list-notice.png')},
-    {id:3,type:'News',title:'Help and inspire fellow designers by...',icon:require('../../../../res/icon/list-news.png')},
+    {id:1,type:'News',title:'Help and inspire fellow designers by...',icon:require('../../../../../res/icon/list-news.png')},
+    {id:2,type:'Notice',title:'Help and inspire fellow designers by...',icon:require('../../../../../res/icon/list-notice.png')},
+    {id:3,type:'News',title:'Help and inspire fellow designers by...',icon:require('../../../../../res/icon/list-news.png')},
 ];
 
 const styles = StyleSheet.create({

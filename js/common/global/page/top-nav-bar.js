@@ -39,6 +39,10 @@ export default class TopNavBar extends Component{
 
 
     render(){
+        const topNavBarLeft = this.props.topNavBarLeft;
+        const topNavBarCenter = this.props.topNavBarCenter;
+        const topNavBarBottom = this.props.topNavBarBottom;
+
         return(
             <View style={styles.navigationBar}>
                 <StatusBar
@@ -49,13 +53,13 @@ export default class TopNavBar extends Component{
                 
                 <View style={styles.navigationBarIn}>
                     <View style={styles.navigationLeft}>
-                        {this.props.topNavBarLeft}
+                        {topNavBarLeft}
                     </View>
                     <View style={styles.navigationCenter}>
-                        {this.props.topNavBarCenter}
+                        {topNavBarCenter}
                     </View>
                     <View style={styles.navigationRight}>
-                        {this.props.topNavBarBottom}
+                        {topNavBarBottom}
                     </View>
                 </View>
             </View>

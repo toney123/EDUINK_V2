@@ -18,9 +18,12 @@ const styles = StyleSheet.create({
 
 export default class SelfButton extends Component{
     render(){
+        const onClickButton = this.props.onClickButton;
+        const buttonName = this.props.buttonName;
+
         return(
-            <TouchableOpacity style={styles.login} onPress={this.props.onClickButton}>
-                <Text style={styles.loginText}>{this.props.buttonName}</Text>
+            <TouchableOpacity style={styles.login} onPress={onClickButton}>
+                <Text style={styles.loginText}>{buttonName}</Text>
             </TouchableOpacity>
         );
     }

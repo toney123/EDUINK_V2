@@ -3,8 +3,9 @@
  */
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,TextInput,TouchableOpacity} from 'react-native';
-import SelfButton from '../common/global/self-button';
-import SelfLinkText from '../common/global/self-link-text';
+import SelfButton from '../common/global/page/self-button';
+import SelfLinkText from '../common/global/page/self-link-text';
+import Net from '../common/global/function/net';
 
 const styles = StyleSheet.create({
     container:{
@@ -124,9 +125,7 @@ export default class ForgetPasswordPage extends Component{
             let routeName;
             switch(responseStatus){
                 case 401:
-                    if(JSON.parse(response._bodyText).appCode == 'ERR_INVALID_APP_ID'){
-                        message = 'Invalid school ID';
-                    }
+                    message = Net.codeMessage(JSON.parse(response._bodyText).appCode);
                     break;
                 case 409:
                     message = 'Unable to execute instruction';

@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
-import TopNavBar from '../common/global/top-nav-bar';
+import TopNavBar from '../common/global/page/top-nav-bar';
 
 const styles = StyleSheet.create({
     container:{

@@ -4,9 +4,9 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,StatusBar,TouchableOpacity,Dimensions,Image} from 'react-native';
 import SideMenu from 'react-native-side-menu';
-import LeftDrawer from '../common/home/left-drawer';
-import TopTabView from '../common/home/TopTab/top-tab-view';
-import TopNavBar from '../common/global/top-nav-bar';
+import LeftDrawer from '../common/home/page/left-drawer';
+import TopTabView from '../common/home/page/TopTab/top-tab-view';
+import TopNavBar from '../common/global/page/top-nav-bar';
 
 const styles = StyleSheet.create({
     container:{

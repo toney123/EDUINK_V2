@@ -5,6 +5,7 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,AsyncStorage} from 'react-native';
 import Storage from 'react-native-storage';
 import {StackActions,NavigationActions } from 'react-navigation';
+import Net from '../common/global/function/net';
 
 
 export default class StartPage extends Component{
@@ -85,26 +86,12 @@ export default class StartPage extends Component{
 
             let message;
             let routeName;
-            switch(responseStatus){
-                case 200:
-                    global.token = responseJson.sessionToken;
-                    routeName = 'Main';
-                    break;
-                case 401:
-                    if(responseJson.appCode == 'ERR_INVALID_APP_ID'){
-                        message = 'Invalid school ID';
-                        routeName = 'Login';
-                    }else if(responseJson.appCode == 'ERR_INVALID_SESSION_TOKEN'){
-                        message = 'Authentication information expires, please log in again';
-                        routeName = 'Login';
-                    }
-                    break;
-                case 403:
-                    if(responseJson.appCode == 'ERR_NO_PERMISSION'){
-                        message = 'Currently User does not have permission to call this API';
-                        routeName = 'Login';
-                    }
-                    break;
+            if(responseStatus == 200){
+                global.token = responseJson.sessionToken;
+                routeName = 'Main';
+            }else{
+                message = Net.codeMessage(responseJson.appCode);
+                routeName = 'Login';
             }
 
             if(message != undefined){

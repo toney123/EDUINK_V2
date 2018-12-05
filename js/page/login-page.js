@@ -4,8 +4,9 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,StatusBar,TouchableOpacity,Dimensions,Image,TextInput,Button} from 'react-native';
 import Storage from 'react-native-storage';
-import SelfButton from '../common/global/self-button';
-import SelfLinkText from '../common/global/self-link-text';
+import SelfButton from '../common/global/page/self-button';
+import SelfLinkText from '../common/global/page/self-link-text';
+import Net from '../common/global/function/net';
 
 const styles = StyleSheet.create({
     container:{
@@ -141,7 +142,7 @@ export default class LoginPage extends Component{
                 global.token = responseJson.sessionToken;
                 this.props.navigation.navigate('Main');
             }else{
-                alert(responseJson.message);
+                alert(Net.codeMessage(responseJson.appCode));
             }
             
         })

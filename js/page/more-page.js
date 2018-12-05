@@ -2,8 +2,10 @@
  * 更多页
  */
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View,Image} from 'react-native';
-import TopNavBar from '../common/global/top-nav-bar';
+import {Platform, StyleSheet, Text, View,Image,TouchableOpacity,FlatList} from 'react-native';
+import TopNavBar from '../common/global/page/top-nav-bar';
+import Net from '../common/global/function/net';
+import FlatListItem from '../common/more/page/flatlist-item';
 
 const styles = StyleSheet.create({
     container:{
@@ -64,13 +66,33 @@ const styles = StyleSheet.create({
     userBottom:{
         flex:1,
     },
-    mainModule:{
+    business:{
         flex:1,
     },
-    otherModule:{
+    systemItems:{
+        flex:1,
+    },
+    systemItemsTop:{
+        flex:1,
+    },
+    systemItemsCenter:{
+        flex:5,
+    },
+    systemItemsBottom:{
         flex:1,
     }
 });
+
+const businessItemData = [
+    {name:'Absentee note'},
+    {name:'Billing record'},
+    {name:'Calendar'},
+    {name:'Attendance'},
+];
+
+const systemItemData = [
+    {name:'Settings'}
+];
 
 
 export default class MorePage extends Component{
@@ -81,6 +103,7 @@ export default class MorePage extends Component{
             userName:'',
             email:''
         }
+        
     }
 
     componentWillMount(){
@@ -104,17 +127,11 @@ export default class MorePage extends Component{
                     })
                     break;
                 case 401:
-                    if(responseJson.appCode == 'ERR_INVALID_APP_ID'){
-                        message = 'Invalid school ID';
-                    }else if(responseJson.appCode == 'ERR_INVALID_SESSION_TOKEN'){
-                        message = 'Authentication information expires, please log in again';
-                    }
+                    message = Net.codeMessage(responseJson.appCode);
                     routeName = 'Login';
                     break;
                 case 403:
-                    if(responseJson.appCode == 'ERR_NO_PERMISSION'){
-                        message = 'Currently User does not have permission to call this API';
-                    } 
+                    message = Net.codeMessage(responseJson.appCode);
                     break;
             }
 
@@ -131,6 +148,7 @@ export default class MorePage extends Component{
           alert(error);
         });
     }
+
 
     render(){
         return(
@@ -160,8 +178,20 @@ export default class MorePage extends Component{
                         </View>
                         <View style={styles.userBottom}></View>
                     </View>
-                    <View style={styles.mainModule}></View>
-                    <View style={styles.otherModule}></View>
+                    <View style={styles.businessItems}>
+                        <FlatListItem 
+                            flatListItemData={businessItemData}
+                        />
+                    </View>
+                    <View style={styles.systemItems}>
+                        <View style={styles.systemItemsTop}></View>
+                        <View style={styles.systemItemsCenter}>
+                            <FlatListItem 
+                                flatListItemData={systemItemData}
+                            />
+                        </View>
+                        <View style={styles.systemItemsBottom}></View>
+                    </View>
                 </View>
             </View>
         );

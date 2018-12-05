@@ -16,9 +16,12 @@ const styles = StyleSheet.create({
 
 export default class SelfLinkText extends Component{
     render(){
+        const onClickText = this.props.onClickText;
+        const textName = this.props.textName;
+
         return(
-            <TouchableOpacity style={styles.forgetPassword} onPress={this.props.onClickText}>
-                <Text style={styles.forgetPasswordText}>{this.props.textName}</Text>
+            <TouchableOpacity style={styles.forgetPassword} onPress={onClickText}>
+                <Text style={styles.forgetPasswordText}>{textName}</Text>
             </TouchableOpacity>
         );
     }
