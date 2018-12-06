@@ -120,6 +120,15 @@ export default class TopTabALL extends Component{
         super(props);
     }
 
+    _onScroll(e){
+        let y = e.nativeEvent.contentOffset.y;
+        if(y == 0){
+            this.props.updateParentTopTabItemColor(false);
+        }else{
+            this.props.updateParentTopTabItemColor(true,y/10);
+        }
+    }
+
 
     render(){
         return (
@@ -127,6 +136,7 @@ export default class TopTabALL extends Component{
                 data={contents}
                 // 设置自定义key，消除警告
                 keyExtractor={(item)=>item.title}
+                onScroll={(e)=>this._onScroll(e)}
                 renderItem={({item})=>{
                     return (
                         <View style={styles.container}>

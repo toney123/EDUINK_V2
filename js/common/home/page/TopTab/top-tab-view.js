@@ -21,7 +21,6 @@ const tabs = [
 const styles = StyleSheet.create({
     container:{
         flex:1,
-        top:12,
     },
     containerTop:{
         flex:1,
@@ -30,11 +29,12 @@ const styles = StyleSheet.create({
         flex:14,
     },
     tabItem:{
+        marginTop:10,
         width:100,
     },
     tabItemText:{
         textAlign:'center',
-        color:'#8F9FB3'
+        color:'#8F9FB3',
     },
     tabItemTextSelected:{
         textAlign:'center',
@@ -55,7 +55,9 @@ export default class TopTabView extends Component{
         super(props);
         this.state = {
             selectTabIndex:0,
+            topTabItemStyle:styles.containerTop
         }
+        this.updateTopTabItemColor = this.updateTopTabItemColor.bind(this);
     }
 
     // 切换tab
@@ -87,14 +89,19 @@ export default class TopTabView extends Component{
         });
     }
 
-
+    updateTopTabItemColor(bool,opacity){
+        const containerTopStyle = bool ?  { flex:1,opacity:opacity,backgroundColor:'#FFF'} : styles.containerTop;
+        this.setState({
+            topTabItemStyle:containerTopStyle
+        });
+    }
 
 
     render(){
 
         return(
             <View style={styles.container}>
-                <View style={styles.containerTop}>
+                <View style={this.state.topTabItemStyle}>
                     <FlatList
                         data={tabs}
                         // 水平排列
@@ -149,7 +156,7 @@ export default class TopTabView extends Component{
                             const TabView = item.view;
                             return (
                                 <View style={{width:screenWidth}}>
-                                    <TabView />
+                                    <TabView updateParentTopTabItemColor={this.updateTopTabItemColor} />
                                 </View>
                             );
                         }}
