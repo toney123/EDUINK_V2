@@ -3,12 +3,36 @@
  */
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,TouchableOpacity,Image,FlatList} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import PictureWall from '../../../global/page/picture-wall';
+
+const pictureData = [
+    {url:'https://facebook.github.io/react-native/img/favicon.png'},
+    {url:'https://facebook.github.io/react-native/img/favicon.png'},
+    {url:'https://facebook.github.io/react-native/img/favicon.png'},
+];
 
 const contents = [
-    {id:1,type:'News',title:'Help and inspire fellow designers by...',icon:require('../../../../../res/icon/list-news.png')},
-    {id:2,type:'Notice',title:'Help and inspire fellow designers by...',icon:require('../../../../../res/icon/list-notice.png')},
-    {id:3,type:'News',title:'Help and inspire fellow designers by...',icon:require('../../../../../res/icon/list-news.png')},
+    {
+        id:1,
+        type:'News',
+        title:'Help and inspire fellow designers by...',
+        icon:require('../../../../../res/icon/list-news.png'),
+        pictures:pictureData
+    },
+    {   
+        id:2,
+        type:'Notice',
+        title:'Help and inspire fellow designers by...',
+        icon:require('../../../../../res/icon/list-notice.png'),
+        pictures:pictureData
+    },
+    {
+        id:3,
+        type:'News',
+        title:'Help and inspire fellow designers by...',
+        icon:require('../../../../../res/icon/list-news.png'),
+        pictures:pictureData
+    },
 ];
 
 const styles = StyleSheet.create({
@@ -98,11 +122,11 @@ const styles = StyleSheet.create({
     contentImage:{
         flex:7,
     },
-    contentImagePreview:{
-        width:'100%',
-        height:'100%',
-        borderRadius:3,
-    },
+    // contentImagePreview:{
+    //     width:'100%',
+    //     height:'100%',
+    //     borderRadius:3,
+    // },
     contentTime:{
         flex:2,
     },
@@ -114,10 +138,15 @@ const styles = StyleSheet.create({
 });
 
 
+
 export default class TopTabALL extends Component{
 
     constructor(props){
         super(props);
+        this.state = {
+            previewPictureStatus:false,
+        }
+        this.updatePictureState = this.updatePictureState.bind(this);
     }
 
     _onScroll(e){
@@ -127,6 +156,17 @@ export default class TopTabALL extends Component{
         }else{
             this.props.updateParentTopTabItemColor(true,y/10);
         }
+    }
+
+    _showPictures(url){
+        console.warn(url);
+    }
+
+    // 供子组件使用
+    updatePictureState(bool){
+        this.setState({
+            previewPictureStatus:bool
+        });
     }
 
 
@@ -162,10 +202,38 @@ export default class TopTabALL extends Component{
                                             <Text style={styles.contentTextTitle}>{item.title}</Text>
                                         </View>
                                         <View style={styles.contentImage}>
-                                            <Image 
-                                                style={styles.contentImagePreview} 
-                                                source={{uri: "https://facebook.github.io/react-native/img/favicon.png"}} 
+                                            <PictureWall
+                                                getParentPictureData = {pictureData}
+                                                updateParentPictureState = {this.updatePictureState}
+                                                getParentPictureState = {this.state.previewPictureStatus}
                                             />
+                                            
+                                            
+                                           
+                                            {/* <TouchableOpacity style={{flex:1}}>
+                                                <Image 
+                                                    style={styles.contentImagePreview} 
+                                                    source={{uri: "https://facebook.github.io/react-native/img/favicon.png"}} 
+                                                />
+                                            </TouchableOpacity>
+                                            <TouchableOpacity style={{flex:1}}>
+                                                <Image 
+                                                    style={styles.contentImagePreview} 
+                                                    source={{uri: "https://facebook.github.io/react-native/img/favicon.png"}} 
+                                                />
+                                            </TouchableOpacity>
+                                            <TouchableOpacity style={{flex:1}}>
+                                                <Image 
+                                                    style={styles.contentImagePreview} 
+                                                    source={{uri: "https://facebook.github.io/react-native/img/favicon.png"}} 
+                                                />
+                                            </TouchableOpacity>
+                                            <TouchableOpacity style={{flex:1}}>
+                                                <Image 
+                                                    style={styles.contentImagePreview} 
+                                                    source={{uri: "https://facebook.github.io/react-native/img/favicon.png"}} 
+                                                />
+                                            </TouchableOpacity> */}
                                         </View>
                                         <View style={styles.contentTime}>
                                             <Text style={styles.contentTimeText}>11-27 17:00</Text>
