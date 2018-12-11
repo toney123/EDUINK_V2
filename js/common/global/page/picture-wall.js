@@ -22,18 +22,26 @@ const styles = StyleSheet.create({
     },
 });
 
+// 获取当前设备的实际宽度
 const screenWidth = Dimensions.get('window').width;
+// 用于获取父组件传来的图片数据
+let pictureData;
+// 用于存放已调整好的样式代码
+let pictureWalls = [];
+// 用于获得根据图片数量修改图片排列的样式
+let pictureStyles;
 
 export default class PictureWall extends Component{
 
     constructor(props){
         super(props);
+        this.state = {
+            pictureIndex:0,
+            pictureStatus:false,
+        }
         this._updatePictureStyle = this._updatePictureStyle.bind(this);
     }
 
-    componentWillMount(){
-         
-    }
 
     _updatePictureStyle(pictureData){
         let width = screenWidth / 4;
@@ -79,55 +87,85 @@ export default class PictureWall extends Component{
         return pictureStyles;
     }
 
+    // 修改图片显示的序号
+    _updatePictureIndex(index){
+        // 如果图片预览没打开，则开启
+        if(this.state.pictureStatus == false){
+            this.setState({
+                pictureStatus:true,
+            });
+        }
+        // 如果图片序号跟传入的序号不一致，则更新
+        if(this.state.pictureIndex != index){
+            this.setState({
+                pictureIndex:index,
+            });
+        }
+    }
 
+    // 修改图片的显示状态
+    _updatePictureState(bool){
+        this.setState({
+            pictureStatus:bool
+        });
+    }
 
-    render(){
-       
+    componentWillMount(){
+        // 清空
+        pictureWalls = [];
         // 父组件的图片数据
-        const pictureData = this.props.getParentPictureData;
+        pictureData = this.props.getParentPictureData;
 
-        // 根据图片数量修改图片排列的样式
-        let pictureStyles = this._updatePictureStyle(pictureData);
-
-        let pictureWalls=[];
+        // 获得根据图片数量修改图片排列的样式
+        pictureStyles = this._updatePictureStyle(pictureData);
+        
         
         for(i in pictureData){
-                pictureWalls.push(
-                <TouchableOpacity key={i} style={pictureStyles}>
-                    <Image 
-                        style={styles.contentImagePreview} 
-                        source={{uri: pictureData[i].url}} 
-                    />
-                </TouchableOpacity>
+            // 存放已调整好的样式代码
+            pictureWalls.push(
+                <Image 
+                    style={styles.contentImagePreview} 
+                    source={{uri: pictureData[i].url}} 
+                />
             )
         }
+    }
 
+    componentDidMount(){
+        
+    }
 
-
-        // 父组件的图片显示状态
-        const pictureState = this.props.getParentPictureState;
-        // 父组件的修改图片状态的方法
-        const updatePictureState = this.props.updateParentPictureState;
-
+    render(){
         return(
             <View style={styles.container}>
                  {/* 置顶图层 */}
                  <Modal 
                     // 可见性
-                    visible={pictureState}
+                    visible={this.state.pictureStatus}
                     // 后退键事件
-                    onRequestClose={()=>updatePictureState(false)}
+                    onRequestClose={()=>this._updatePictureState(false)}
                     // 动画类型
                     animationType='slide'
                     >
                     {/* 图片预览 */}
                     <ImageViewer 
+                        // 显示第几张图
+                        index = {this.state.pictureIndex}
+                        // 图片数据
                         imageUrls={pictureData}
-                        onClick={()=>updatePictureState(false)}
+                        // 设置点击图片之后，退出图片预览
+                        onClick={()=>this._updatePictureState(false)}
                     />
                 </Modal>
                 <View style={styles.picture}>
-                    {pictureWalls.map((currentValue,index,arr)=>currentValue)}
+                    {/* 遍历样式代码，并加入点击事件，如果某张图片被点击，则打开图片预览 */}
+                    {pictureWalls.map((currentValue,index,arr)=>{
+                        return(
+                            <TouchableOpacity style={pictureStyles} key={index} onPress={()=>this._updatePictureIndex(index)}>
+                                {currentValue}
+                            </TouchableOpacity>
+                        );
+                    })}
                 </View>
             </View>
         );

@@ -9,8 +9,10 @@ import TopTabNotice from './top-tab-notice';
 import TopTabNews from './top-tab-news';
 import TopTabPhoto from './top-tab-photo';
 
+// 获取当前设备实际的屏幕宽度
 const screenWidth = Dimensions.get('window').width;
 
+// 选项卡
 const tabs = [
     {id:1,name:'ALL',view:TopTabALL},
     {id:2,name:'NOTICE',view:TopTabNotice},
@@ -89,6 +91,7 @@ export default class TopTabView extends Component{
         });
     }
 
+    // 提供子组件使用，以修改选项卡样式
     updateTopTabItemColor(bool,opacity){
         const containerTopStyle = bool ?  { flex:1,opacity:opacity,backgroundColor:'#FFF'} : styles.containerTop;
         this.setState({
@@ -156,6 +159,7 @@ export default class TopTabView extends Component{
                             const TabView = item.view;
                             return (
                                 <View style={{width:screenWidth}}>
+                                    {/* 提供修改父组件 */}
                                     <TabView updateParentTopTabItemColor={this.updateTopTabItemColor} />
                                 </View>
                             );

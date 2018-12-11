@@ -55,21 +55,16 @@ const styles = StyleSheet.create({
     containerRight:{
         flex:1,
     },
-    previewContent:{
-        top:10,
-        borderWidth:1,
-        height:280,
-        borderRadius:5,
-        backgroundColor:'#FFF',
-        borderColor:'#FFF',
-        flexDirection:'row',
-        marginBottom:25,
-        // ...Platform.select({
-        //     android:{
-        //         elevation:1,
-        //     }
-        // }),
-    },
+    // previewContent:{
+    //     top:10,
+    //     borderWidth:1,
+    //     height:280,
+    //     borderRadius:5,
+    //     backgroundColor:'#FFF',
+    //     borderColor:'#FFF',
+    //     flexDirection:'row',
+    //     marginBottom:25,
+    // },
     previewContentLeft:{
         flex:1,
     },
@@ -125,9 +120,9 @@ const styles = StyleSheet.create({
     contentTextTitle:{
         top:8,
     },
-    contentImage:{
-        flex:6,
-    },
+    // contentImage:{
+    //     flex:6,
+    // },
     // contentImagePreview:{
     //     width:'100%',
     //     height:'100%',
@@ -148,7 +143,6 @@ export default class TopTabALL extends Component{
     constructor(props){
         super(props);
         this.state = {
-            previewPictureStatus:false,
             previewContentStyle:{
                 top:10,
                 borderWidth:1,
@@ -163,29 +157,25 @@ export default class TopTabALL extends Component{
                 flex:6,
             }
         }
-        this.updatePictureState = this.updatePictureState.bind(this);
         this.updatePreviewContent = this.updatePreviewContent.bind(this);
     }
 
+    // flatlist鼠标滚动事件
     _onScroll(e){
+        // 获取纵向距离
         let y = e.nativeEvent.contentOffset.y;
+
         if(y == 0){
+            // 恢复默认样式
             this.props.updateParentTopTabItemColor(false);
         }else{
+            // 根据纵向滚动距离，调整透明度
             this.props.updateParentTopTabItemColor(true,y/10);
         }
     }
 
-    _showPictures(url){
-        console.warn(url);
-    }
-
     // 供子组件修改父组件里的内容卡片
     updatePreviewContent(height,flex){
-        if(this.state.previewContentStyle.height == height){
-            return false;
-        }
-
         this.setState({
             previewContentStyle:{
                 top:10,
@@ -203,12 +193,8 @@ export default class TopTabALL extends Component{
         });
     }
 
-    // 供子组件使用
-    updatePictureState(bool){
-        this.setState({
-            previewPictureStatus:bool
-        });
-    }
+   
+
 
 
     render(){
@@ -223,7 +209,7 @@ export default class TopTabALL extends Component{
                         <View style={styles.container}>
                             <View style={styles.containerLeft}></View>
                             <View style={styles.containerCenter}>
-                                {/* 此处content卡片图片部分的比例样式根据图片的数量而变化 */}
+                                {/* 此处content卡片最外边的样式根据图片的数量而变化 */}
                                 <View style={this.state.previewContentStyle}>
                                     <View style={styles.previewContentLeft}></View>
                                     <TouchableOpacity style={styles.previewContentCenter}>
@@ -243,13 +229,13 @@ export default class TopTabALL extends Component{
                                         <View style={styles.contentText}>
                                             <Text style={styles.contentTextTitle}>{item.title}</Text>
                                         </View>
+                                        {/* 此处content卡片图片部分的比例样式根据图片的数量而变化 */}
                                         <View style={this.state.contentImageStyle}>
-                                        {/* <View style={styles.contentImage}> */}
                                             <PictureWall
+                                                // 提供修改父组件样式的方法
                                                 updateParentPreviewContent = {this.updatePreviewContent}
+                                                // 提供图片数据
                                                 getParentPictureData = {pictureData}
-                                                updateParentPictureState = {this.updatePictureState}
-                                                getParentPictureState = {this.state.previewPictureStatus}
                                             />
                                         </View>
                                         <View style={styles.contentTime}>
