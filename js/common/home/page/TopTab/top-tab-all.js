@@ -9,6 +9,12 @@ const pictureData = [
     {url:'https://facebook.github.io/react-native/img/favicon.png'},
     {url:'https://facebook.github.io/react-native/img/favicon.png'},
     {url:'https://facebook.github.io/react-native/img/favicon.png'},
+    {url:'https://facebook.github.io/react-native/img/favicon.png'},
+    {url:'https://facebook.github.io/react-native/img/favicon.png'},
+    {url:'https://facebook.github.io/react-native/img/favicon.png'},
+    {url:'https://facebook.github.io/react-native/img/favicon.png'},
+    {url:'https://facebook.github.io/react-native/img/favicon.png'},
+    {url:'https://facebook.github.io/react-native/img/favicon.png'},
 ];
 
 const contents = [
@@ -120,7 +126,7 @@ const styles = StyleSheet.create({
         top:8,
     },
     contentImage:{
-        flex:7,
+        flex:6,
     },
     // contentImagePreview:{
     //     width:'100%',
@@ -137,16 +143,28 @@ const styles = StyleSheet.create({
     }
 });
 
-
-
 export default class TopTabALL extends Component{
 
     constructor(props){
         super(props);
         this.state = {
             previewPictureStatus:false,
+            previewContentStyle:{
+                top:10,
+                borderWidth:1,
+                height:280,
+                borderRadius:5,
+                backgroundColor:'#FFF',
+                borderColor:'#FFF',
+                flexDirection:'row',
+                marginBottom:25,
+            },
+            contentImageStyle:{
+                flex:6,
+            }
         }
         this.updatePictureState = this.updatePictureState.bind(this);
+        this.updatePreviewContent = this.updatePreviewContent.bind(this);
     }
 
     _onScroll(e){
@@ -160,6 +178,29 @@ export default class TopTabALL extends Component{
 
     _showPictures(url){
         console.warn(url);
+    }
+
+    // 供子组件修改父组件里的内容卡片
+    updatePreviewContent(height,flex){
+        if(this.state.previewContentStyle.height == height){
+            return false;
+        }
+
+        this.setState({
+            previewContentStyle:{
+                top:10,
+                borderWidth:1,
+                height:height,
+                borderRadius:5,
+                backgroundColor:'#FFF',
+                borderColor:'#FFF',
+                flexDirection:'row',
+                marginBottom:25,
+            },
+            contentImageStyle:{
+                flex:flex,
+            }
+        });
     }
 
     // 供子组件使用
@@ -182,7 +223,8 @@ export default class TopTabALL extends Component{
                         <View style={styles.container}>
                             <View style={styles.containerLeft}></View>
                             <View style={styles.containerCenter}>
-                                <View style={styles.previewContent}>
+                                {/* 此处content卡片图片部分的比例样式根据图片的数量而变化 */}
+                                <View style={this.state.previewContentStyle}>
                                     <View style={styles.previewContentLeft}></View>
                                     <TouchableOpacity style={styles.previewContentCenter}>
                                         <View style={styles.contentType}>
@@ -201,39 +243,14 @@ export default class TopTabALL extends Component{
                                         <View style={styles.contentText}>
                                             <Text style={styles.contentTextTitle}>{item.title}</Text>
                                         </View>
-                                        <View style={styles.contentImage}>
+                                        <View style={this.state.contentImageStyle}>
+                                        {/* <View style={styles.contentImage}> */}
                                             <PictureWall
+                                                updateParentPreviewContent = {this.updatePreviewContent}
                                                 getParentPictureData = {pictureData}
                                                 updateParentPictureState = {this.updatePictureState}
                                                 getParentPictureState = {this.state.previewPictureStatus}
                                             />
-                                            
-                                            
-                                           
-                                            {/* <TouchableOpacity style={{flex:1}}>
-                                                <Image 
-                                                    style={styles.contentImagePreview} 
-                                                    source={{uri: "https://facebook.github.io/react-native/img/favicon.png"}} 
-                                                />
-                                            </TouchableOpacity>
-                                            <TouchableOpacity style={{flex:1}}>
-                                                <Image 
-                                                    style={styles.contentImagePreview} 
-                                                    source={{uri: "https://facebook.github.io/react-native/img/favicon.png"}} 
-                                                />
-                                            </TouchableOpacity>
-                                            <TouchableOpacity style={{flex:1}}>
-                                                <Image 
-                                                    style={styles.contentImagePreview} 
-                                                    source={{uri: "https://facebook.github.io/react-native/img/favicon.png"}} 
-                                                />
-                                            </TouchableOpacity>
-                                            <TouchableOpacity style={{flex:1}}>
-                                                <Image 
-                                                    style={styles.contentImagePreview} 
-                                                    source={{uri: "https://facebook.github.io/react-native/img/favicon.png"}} 
-                                                />
-                                            </TouchableOpacity> */}
                                         </View>
                                         <View style={styles.contentTime}>
                                             <Text style={styles.contentTimeText}>11-27 17:00</Text>

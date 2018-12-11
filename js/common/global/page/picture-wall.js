@@ -2,7 +2,7 @@
  * 类似于朋友圈的图片墙
  */
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View,TouchableOpacity,Image,FlatList,Modal} from 'react-native';
+import {Platform, StyleSheet, Text, View,TouchableOpacity,Image,FlatList,Modal,Dimensions} from 'react-native';
 import ImageViewer from 'react-native-image-zoom-viewer';
 
 const styles = StyleSheet.create({
@@ -22,42 +22,86 @@ const styles = StyleSheet.create({
     },
 });
 
+const screenWidth = Dimensions.get('window').width;
+
 export default class PictureWall extends Component{
 
     constructor(props){
         super(props);
+        this._updatePictureStyle = this._updatePictureStyle.bind(this);
     }
 
     componentWillMount(){
-       
+         
+    }
+
+    _updatePictureStyle(pictureData){
+        let width = screenWidth / 4;
+        let pictureLength = pictureData.length;
+        let pictureStyles;
+
+        // 只有一张图片时，最大化显示
+        if(pictureLength <= 1){
+            pictureStyles = {
+                width:'100%',
+                height:'100%',
+            };
+        // 一张以上时，分情况调整
+        }else{ 
+            // 设置统一的图片尺寸
+            pictureStyles={
+                width:width,
+                height:width,
+                borderWidth:2,
+                borderColor:'#FFF'
+            }
+           
+            let imageFlex;
+            let contentHeight;
+            // 第一行3张图，
+            if(pictureLength <= 3){
+                contentHeight = 210;
+                imageFlex = 4;
+            // 第二行3张图
+            }else if(pictureLength <= 6){
+                contentHeight = 350;
+                imageFlex = 6;
+            // 第三行3张图
+            }else if(pictureLength <= 9){
+                contentHeight = 440;
+                imageFlex = 10;
+            }
+            // 第一参数：content 卡片最外边的高度，
+            // 第二参数：content 中间图片部分的比例,
+            // 通过修改父组件state，调整content的一些样式
+            this.props.updateParentPreviewContent(contentHeight,imageFlex);
+        }
+        return pictureStyles;
     }
 
 
 
     render(){
+       
         // 父组件的图片数据
         const pictureData = this.props.getParentPictureData;
+
+        // 根据图片数量修改图片排列的样式
+        let pictureStyles = this._updatePictureStyle(pictureData);
+
+        let pictureWalls=[];
         
-        // let pictureWalls=[];
-        // for(i in pictureData){
-        //     let url = pictureData[i].url;
-        //     // 每一行3张图，若整除3，则换行
-        //     if(Number.isInteger((parseInt(i) + 1) / 3)){
-        //         pictureWallView += (
-        //             <View style={{flex:1,flexDirection:'row'}}>pictureWallView</View>
-        //         );
-        //     }else{
-        //         pictureWalls.push(<TouchableOpacity style={{flex:1,backgroundColor:'green'}}>
-        //         <Image 
-        //             style={styles.contentImagePreview} 
-        //             source={{uri: url}} 
-        //         />
-        //     </TouchableOpacity>)
-        //     }
-        // }
-        
-        // const PictureWallView = '';
- 
+        for(i in pictureData){
+                pictureWalls.push(
+                <TouchableOpacity key={i} style={pictureStyles}>
+                    <Image 
+                        style={styles.contentImagePreview} 
+                        source={{uri: pictureData[i].url}} 
+                    />
+                </TouchableOpacity>
+            )
+        }
+
 
 
         // 父组件的图片显示状态
@@ -83,13 +127,7 @@ export default class PictureWall extends Component{
                     />
                 </Modal>
                 <View style={styles.picture}>
-                    {/* {pictureWalls.map((currentValue,index,arr)=>currentValue)} */}
-                        <TouchableOpacity style={{alignContent:'center',width:130,height:40}}>
-                            <Image 
-                                style={styles.contentImagePreview} 
-                                source={{uri: 'https://facebook.github.io/react-native/img/favicon.png'}} 
-                            />
-                        </TouchableOpacity>
+                    {pictureWalls.map((currentValue,index,arr)=>currentValue)}
                 </View>
             </View>
         );
