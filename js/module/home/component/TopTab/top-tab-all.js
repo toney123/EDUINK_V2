@@ -1,9 +1,18 @@
 /**
  * 主页里的选项栏all
+ * 
+ * 需要传入以下属性值：
+ * 
+ * updateParentTopTabItemColor(必须)
+ * 类型:function
+ * 说明：修改父组件的选项颜色
+ * 
  */
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,TouchableOpacity,Image,FlatList} from 'react-native';
-import PictureWall from '../../../global/component/picture-wall';
+import PictureWall from '../picture-wall';
+import PropTypes from 'prop-types';
+
 
 const pictureData = [
     {url:'https://facebook.github.io/react-native/img/favicon.png'},
@@ -140,6 +149,16 @@ const styles = StyleSheet.create({
 
 export default class TopTabALL extends Component{
 
+    // 属性默认值
+    static defaultProps = {
+
+    }
+
+    // 属性验证
+    static propTypes = {
+        updateParentTopTabItemColor:PropTypes.func
+    }
+
     constructor(props){
         super(props);
         this.state = {
@@ -235,7 +254,7 @@ export default class TopTabALL extends Component{
                                                 // 提供修改父组件样式的方法
                                                 updateParentPreviewContent = {this.updatePreviewContent}
                                                 // 提供图片数据
-                                                getParentPictureData = {pictureData}
+                                                items = {pictureData}
                                             />
                                         </View>
                                         <View style={styles.contentTime}>

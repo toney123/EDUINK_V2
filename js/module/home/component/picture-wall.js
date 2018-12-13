@@ -1,9 +1,19 @@
 /**
  * 类似于朋友圈的图片墙
+ * 
+ * 需要传入以下属性：
+ * 
+ * updateParentPreviewContent(必须)
+ * 类型:function
+ * 
+ * items(必须)
+ * 类型：array
+ * 格式：[{url:''}]
  */
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,TouchableOpacity,Image,FlatList,Modal,Dimensions} from 'react-native';
 import ImageViewer from 'react-native-image-zoom-viewer';
+import PropTypes from 'prop-types';
 
 const styles = StyleSheet.create({
     container:{
@@ -32,6 +42,11 @@ let pictureWalls = [];
 let pictureStyles;
 
 export default class PictureWall extends Component{
+
+    static propTypes = {
+        items:PropTypes.arrayOf(PropTypes.object),
+        updateParentPreviewContent:PropTypes.func
+    }
 
     constructor(props){
         super(props);
@@ -114,7 +129,7 @@ export default class PictureWall extends Component{
         // 清空
         pictureWalls = [];
         // 父组件的图片数据
-        pictureData = this.props.getParentPictureData;
+        pictureData = this.props.items;
 
         // 获得根据图片数量修改图片排列的样式
         pictureStyles = this._updatePictureStyle(pictureData);

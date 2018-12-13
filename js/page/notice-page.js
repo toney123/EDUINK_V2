@@ -33,7 +33,7 @@ export default class NoticePage extends Component{
             <View style={styles.container}>
                 <View style={styles.containerTop}>
                     <TopNavBar 
-                        topNavBarCenter={
+                        centerSection={
                             <Text style={styles.topNavBarCenterText}>Notice</Text>
                         }
                     />

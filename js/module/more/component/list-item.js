@@ -1,8 +1,17 @@
 /**
  * 更多页里的列表项
+ * 
+ * 需要传入以下属性：
+ * 
+ * items(必须)
+ * 类型:array
+ * 格式：[{name:''}]
+ * 说明：列表选项数据
+ * 
  */
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,Image,TouchableOpacity,FlatList} from 'react-native';
+import PropTypes from 'prop-types';
 
 const styles = StyleSheet.create({
     item:{
@@ -50,7 +59,17 @@ const styles = StyleSheet.create({
 });
 
 
-export default class FlatListItem extends Component{
+export default class ListItem extends Component{
+
+    // 属性默认值
+    static defaultProps = {
+
+    }
+
+    // 属性验证
+    static propTypes = {
+        items:PropTypes.arrayOf(PropTypes.object)
+    }
 
     _clickItem(name){
         alert('open:'+name);
@@ -58,17 +77,17 @@ export default class FlatListItem extends Component{
 
 
     render(){
-        const data = this.props.flatListItemData;
+        const items = this.props.items;
 
         return(
             <FlatList
-                data={data}
+                data={items}
                 // 设置自定义key，消除警告
                 keyExtractor = {(item)=>item.name}
                 renderItem={({item,index}) => {
                     let itemCenter = styles.itemCenter;
                     // 如果是最后一项，则不显示下划线
-                    if(data.length == index+1){
+                    if(items.length == index+1){
                         itemCenter = styles.itemCenterWithOutBorder;
                     }
     

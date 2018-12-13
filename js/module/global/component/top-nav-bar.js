@@ -1,16 +1,29 @@
+/**
+ * 导航栏
+ * 
+ * 需要传入以下属性：
+ * 
+ * leftSection(可选)
+ * 类型：react element
+ * 说明：自定义导航栏左边的部分
+ * 
+ * centerSection(可选)
+ * 类型：react element
+ * 说明：自定义导航栏中间的部分
+ * 
+ * rightSection(可选)
+ * 类型：react element
+ * 说明：自定义导航栏右边的部分
+ * 
+ */
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,StatusBar,TouchableOpacity,Dimensions} from 'react-native';
+import PropTypes from 'prop-types';
 
 const styles = StyleSheet.create({
     navigationBar:{
         flex:1,
-        backgroundColor:"#FFF",
-        // ...Platform.select({
-        //     android:{
-        //         elevation:10,
-        //     }
-        // }),
-        
+        backgroundColor:"#FFF",     
     },
     navigationBarIn:{
         flex:1,
@@ -30,8 +43,21 @@ const styles = StyleSheet.create({
 });
 
 
-
 export default class TopNavBar extends Component{
+
+    // 属性默认值
+    static defaultProps = {
+
+    }
+
+
+    // 属性验证
+    static propTypes = {
+        leftSection:PropTypes.element,
+        centerSection:PropTypes.element,
+        rightSection:PropTypes.element
+    }
+
 
     constructor(props){
         super(props);
@@ -39,12 +65,10 @@ export default class TopNavBar extends Component{
 
 
     render(){
-        const topNavBarLeft = this.props.topNavBarLeft;
-        const topNavBarCenter = this.props.topNavBarCenter;
-        const topNavBarBottom = this.props.topNavBarBottom;
 
         return(
             <View style={styles.navigationBar}>
+                {/* 状态栏 */}
                 <StatusBar
                     barStyle='dark-content' 
                     backgroundColor='#FFF'
@@ -53,13 +77,13 @@ export default class TopNavBar extends Component{
                 
                 <View style={styles.navigationBarIn}>
                     <View style={styles.navigationLeft}>
-                        {topNavBarLeft}
+                        {this.props.leftSection}
                     </View>
                     <View style={styles.navigationCenter}>
-                        {topNavBarCenter}
+                        {this.props.centerSection}
                     </View>
                     <View style={styles.navigationRight}>
-                        {topNavBarBottom}
+                        {this.props.rightSection}
                     </View>
                 </View>
             </View>

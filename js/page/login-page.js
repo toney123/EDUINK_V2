@@ -2,10 +2,9 @@
  * 登录页
  */
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View,StatusBar,TouchableOpacity,Dimensions,Image,TextInput,Button} from 'react-native';
-import Storage from 'react-native-storage';
-import SelfButton from '../module/global/component/self-button';
-import SelfLinkText from '../module/global/component/self-link-text';
+import {Platform, StyleSheet, Text, View,Image,TextInput} from 'react-native';
+import Button from '../module/global/component/button';
+import PressText from '../module/global/component/press-text';
 import Net from '../module/global/function/net';
 
 const styles = StyleSheet.create({
@@ -192,13 +191,13 @@ export default class LoginPage extends Component{
                 <View style={styles.containerBottom}>
                     <View style={styles.loginLeft}></View>
                     <View style={styles.loginCenter}>
-                        <SelfButton
-                            buttonName='LOGIN'
-                            onClickButton={()=>this._login()}
+                        <Button
+                            name = 'LOGIN'
+                            onPress = {()=>this._login()}
                         />
-                        <SelfLinkText 
-                            textName='I FORGET MY PASSWORD'
-                            onClickText={()=>this._switchForgetPasswordPage()}
+                        <PressText 
+                            name='I FORGET MY PASSWORD'
+                            onPress={()=>this._switchForgetPasswordPage()}
                         />
                     </View>
                     <View style={styles.loginRight}></View>

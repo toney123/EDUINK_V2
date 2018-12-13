@@ -3,8 +3,8 @@
  */
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,TextInput,TouchableOpacity} from 'react-native';
-import SelfButton from '../module/global/component/self-button';
-import SelfLinkText from '../module/global/component/self-link-text';
+import Button from '../module/global/component/button';
+import PressText from '../module/global/component/press-text';
 import Net from '../module/global/function/net';
 
 const styles = StyleSheet.create({
@@ -188,13 +188,13 @@ export default class ForgetPasswordPage extends Component{
                 <View style={styles.containerBottom}>
                     <View style={styles.sendLeft}></View>
                     <View style={styles.sendCenter}>
-                        <SelfButton
-                            buttonName='SEND EMAIL'
-                            onClickButton={()=>this._send()}
+                        <Button
+                            name='SEND EMAIL'
+                            onPress={()=>this._send()}
                         /> 
-                        <SelfLinkText
-                            textName='BACK TO LOGIN'
-                            onClickText={()=>this._switchLoginPage()}
+                        <PressText
+                            name='BACK TO LOGIN'
+                            onPress={()=>this._switchLoginPage()}
                         />
                     </View>
                     <View style={styles.sendRight}></View>

@@ -4,11 +4,17 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,Image} from 'react-native';
 import TabNavigator from 'react-native-tab-navigator';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import HomePage from '../../../page/home-page';
 import ChatPage from '../../../page/chat-page';
 import NoticePage from '../../../page/notice-page';
 import MorePage from '../../../page/more-page';
+
+const styles = StyleSheet.create({
+    container:{
+        flex:1,
+        backgroundColor:'#F6F9FF'
+    }
+});
 
 
 export default class BottomTabBar extends Component{
@@ -91,9 +97,3 @@ export default class BottomTabBar extends Component{
     }
 }
 
-const styles = StyleSheet.create({
-    container:{
-        flex:1,
-        backgroundColor:'#F6F9FF'
-    }
-});

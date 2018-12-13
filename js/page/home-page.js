@@ -95,12 +95,12 @@ export default class HomePage extends Component{
                     {/* 导航栏(内含状态栏) */}
                     <TopNavBar
                         sytle={styles.TopNavBar} 
-                        topNavBarLeft={
+                        leftSection={
                             <TouchableOpacity style={styles.topNavBarLeftIcon} onPress={this._updateLeftBarStatus}>
                                 <Image style={{width:40,height:40}} source={require('../../res/icon/list.png')} />
                             </TouchableOpacity>
                         }
-                        topNavBarCenter={
+                        centerSection={
                             <Text style={styles.topNavBarCenterText}>{chilName}</Text>
                         }
                     />

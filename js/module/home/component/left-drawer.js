@@ -1,8 +1,16 @@
 /**
  * 主页里的左侧抽屉
+ * 
+ * 需要传入以下属性：
+ * 
+ * updateState(必须)
+ * 类型:function
+ * 说明：修改父类的state
+ * 
  */
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,StatusBar,TouchableOpacity,Dimensions} from 'react-native';
+import PropTypes from 'prop-types';
 
 const styles = StyleSheet.create({
     container:{
@@ -71,6 +79,16 @@ const styles = StyleSheet.create({
 
 
 export default class LeftDrawer extends Component{
+
+    // 默认属性值
+    static defaultProps  = {
+
+    }
+
+    // 属性验证
+    static propTypes = {
+        updateState:PropTypes.func
+    }
 
     constructor(props){
         super(props);

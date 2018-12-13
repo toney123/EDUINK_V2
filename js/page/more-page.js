@@ -5,7 +5,7 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,Image,TouchableOpacity,FlatList} from 'react-native';
 import TopNavBar from '../module/global/component/top-nav-bar';
 import Net from '../module/global/function/net';
-import FlatListItem from '../module/more/component/flatlist-item';
+import ListItem from '../module/more/component/list-item';
 
 const styles = StyleSheet.create({
     container:{
@@ -155,7 +155,7 @@ export default class MorePage extends Component{
             <View style={styles.container}>
                 <View style={styles.containerTop}>
                     <TopNavBar 
-                        topNavBarCenter={
+                        centerSection={
                             <Text style={styles.topNavBarCenterText}>More</Text>
                         }
                     />
@@ -179,15 +179,15 @@ export default class MorePage extends Component{
                         <View style={styles.userBottom}></View>
                     </View>
                     <View style={styles.businessItems}>
-                        <FlatListItem 
-                            flatListItemData={businessItemData}
+                        <ListItem 
+                            items={businessItemData}
                         />
                     </View>
                     <View style={styles.systemItems}>
                         <View style={styles.systemItemsTop}></View>
                         <View style={styles.systemItemsCenter}>
-                            <FlatListItem 
-                                flatListItemData={systemItemData}
+                            <ListItem 
+                                items={systemItemData}
                             />
                         </View>
                         <View style={styles.systemItemsBottom}></View>

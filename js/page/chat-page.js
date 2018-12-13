@@ -32,7 +32,7 @@ export default class ChatPage extends Component{
             <View style={styles.container}>
                 <View style={styles.containerTop}>
                     <TopNavBar 
-                        topNavBarCenter={
+                        centerSection={
                             <Text style={styles.topNavBarCenterText}>Chat</Text>
                         }
                     />
