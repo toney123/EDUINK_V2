@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,AsyncStorage} from 'react-native';
 import {createStackNavigator,createAppContainer,createSwitchNavigator } from 'react-navigation';
 import StartPage from './js/page/start-page';
-import BottomTabBar from './js/common/global/page/bottom-tab-bar';
+import BottomTabBar from './js/module/global/component/bottom-tab-bar';
 import LoginPage from './js/page/login-page';
 import ForgetPasswordPage from './js/page/forget-password-page';
 import OneSignal from 'react-native-onesignal';

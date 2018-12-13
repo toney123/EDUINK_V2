@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,TouchableOpacity,Image,FlatList} from 'react-native';
-import PictureWall from '../../../global/page/picture-wall';
+import PictureWall from '../../../global/component/picture-wall';
 
 const pictureData = [
     {url:'https://facebook.github.io/react-native/img/favicon.png'},

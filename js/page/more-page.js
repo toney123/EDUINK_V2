@@ -3,9 +3,9 @@
  */
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,Image,TouchableOpacity,FlatList} from 'react-native';
-import TopNavBar from '../common/global/page/top-nav-bar';
-import Net from '../common/global/function/net';
-import FlatListItem from '../common/more/page/flatlist-item';
+import TopNavBar from '../module/global/component/top-nav-bar';
+import Net from '../module/global/function/net';
+import FlatListItem from '../module/more/component/flatlist-item';
 
 const styles = StyleSheet.create({
     container:{

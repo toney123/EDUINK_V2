@@ -5,7 +5,7 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,AsyncStorage} from 'react-native';
 import Storage from 'react-native-storage';
 import {StackActions,NavigationActions } from 'react-navigation';
-import Net from '../common/global/function/net';
+import Net from '../module/global/function/net';
 
 
 export default class StartPage extends Component{

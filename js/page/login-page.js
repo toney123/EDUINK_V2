@@ -4,9 +4,9 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,StatusBar,TouchableOpacity,Dimensions,Image,TextInput,Button} from 'react-native';
 import Storage from 'react-native-storage';
-import SelfButton from '../common/global/page/self-button';
-import SelfLinkText from '../common/global/page/self-link-text';
-import Net from '../common/global/function/net';
+import SelfButton from '../module/global/component/self-button';
+import SelfLinkText from '../module/global/component/self-link-text';
+import Net from '../module/global/function/net';
 
 const styles = StyleSheet.create({
     container:{
