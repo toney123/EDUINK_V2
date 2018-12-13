@@ -151,12 +151,12 @@ export default class TopTabALL extends Component{
 
     // 属性默认值
     static defaultProps = {
-
+        
     }
 
     // 属性验证
     static propTypes = {
-        updateParentTopTabItemColor:PropTypes.func
+        updateParentTopTabItemColor:PropTypes.func.isRequired
     }
 
     constructor(props){

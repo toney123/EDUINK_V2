@@ -87,7 +87,7 @@ export default class LeftDrawer extends Component{
 
     // 属性验证
     static propTypes = {
-        updateState:PropTypes.func
+        updateState:PropTypes.func.isRequired
     }
 
     constructor(props){

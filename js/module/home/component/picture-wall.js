@@ -44,8 +44,8 @@ let pictureStyles;
 export default class PictureWall extends Component{
 
     static propTypes = {
-        items:PropTypes.arrayOf(PropTypes.object),
-        updateParentPreviewContent:PropTypes.func
+        items:PropTypes.arrayOf(PropTypes.object).isRequired,
+        updateParentPreviewContent:PropTypes.func.isRequired
     }
 
     constructor(props){

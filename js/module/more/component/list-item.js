@@ -68,7 +68,7 @@ export default class ListItem extends Component{
 
     // 属性验证
     static propTypes = {
-        items:PropTypes.arrayOf(PropTypes.object)
+        items:PropTypes.arrayOf(PropTypes.object).isRequired
     }
 
     _clickItem(name){
