@@ -3,9 +3,9 @@
  */
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,Image,TouchableOpacity,FlatList} from 'react-native';
-import TopNavBar from '../module/global/component/top-nav-bar';
-import Net from '../module/global/function/net';
-import ListItem from '../module/more/component/list-item';
+import TopNavBar from '../component/top-nav-bar';
+import Net from '../util/net';
+import ListItem from '../component/list-item';
 
 const styles = StyleSheet.create({
     container:{
@@ -95,7 +95,7 @@ const systemItemData = [
 ];
 
 
-export default class MorePage extends Component{
+export default class More extends Component{
 
     constructor(props){
         super(props);
@@ -165,7 +165,7 @@ export default class MorePage extends Component{
                         <View style={styles.userTop}></View>
                         <View style={styles.userCenter}>
                             <View style={styles.userAvatar}>
-                                <Image style={styles.userImage} source={require('../../res/image/avatar-default.jpg')} />
+                                <Image style={styles.userImage} source={require('../image/avatar-default.jpg')} />
                             </View>
                             <View style={styles.userName}>
                                 <View style={styles.userNameTop}></View>

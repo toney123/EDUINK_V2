@@ -31,21 +31,21 @@ const contents = [
         id:1,
         type:'News',
         title:'Help and inspire fellow designers by...',
-        icon:require('../../../../../res/icon/list-news.png'),
+        icon:require('../../../image/icon/list-news.png'),
         pictures:pictureData
     },
     {   
         id:2,
         type:'Notice',
         title:'Help and inspire fellow designers by...',
-        icon:require('../../../../../res/icon/list-notice.png'),
+        icon:require('../../../image/icon/list-notice.png'),
         pictures:pictureData
     },
     {
         id:3,
         type:'News',
         title:'Help and inspire fellow designers by...',
-        icon:require('../../../../../res/icon/list-news.png'),
+        icon:require('../../../image/icon/list-news.png'),
         pictures:pictureData
     },
 ];

@@ -3,9 +3,9 @@
  */
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,TextInput,TouchableOpacity} from 'react-native';
-import Button from '../module/global/component/button';
-import PressText from '../module/global/component/press-text';
-import Net from '../module/global/function/net';
+import Button from '../component/button';
+import PressText from '../component/press-text';
+import Net from '../util/net';
 
 const styles = StyleSheet.create({
     container:{
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     }
 });
 
-export default class ForgetPasswordPage extends Component{
+export default class ForgetPassword extends Component{
 
     constructor(props){
         super(props);

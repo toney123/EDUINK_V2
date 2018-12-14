@@ -1,10 +1,13 @@
+/**
+ * 路由
+ */
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,AsyncStorage} from 'react-native';
 import {createStackNavigator,createAppContainer,createSwitchNavigator } from 'react-navigation';
-import StartPage from './js/page/start-page';
-import BottomTabBar from './js/module/global/component/bottom-tab-bar';
-import LoginPage from './js/page/login-page';
-import ForgetPasswordPage from './js/page/forget-password-page';
+import Index from './src/page/index';
+import BottomTabBar from './src/page/bottom-tab-bar';
+import Login from './src/page/login';
+import ForgetPassword from './src/page/forget-password';
 import OneSignal from 'react-native-onesignal';
 
 
@@ -21,24 +24,24 @@ const MainStack = createStackNavigator({
 // SwitchNavigator单页，忽略返回
 const AppContainer = createAppContainer(createSwitchNavigator({
   Login:{
-    screen:LoginPage,
+    screen:Login,
   },
-  Start: {
-    screen:StartPage,
+  Index: {
+    screen:Index,
   },
   ForgetPassword:{
-    screen:ForgetPasswordPage
+    screen:ForgetPassword
   },
   Main:{
     screen:MainStack
   },
 },
   {
-  initialRouteName:'Start'
+  initialRouteName:'Index'
 }));
 
 
-export default class App extends Component{
+export default class Route extends Component{
   constructor(properties) {
     super(properties);
     OneSignal.init("6ec02f76-2d4f-4fb3-9ae4-866b7e2e89ad");

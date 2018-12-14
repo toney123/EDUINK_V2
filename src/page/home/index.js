@@ -4,9 +4,9 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,StatusBar,TouchableOpacity,Dimensions,Image} from 'react-native';
 import SideMenu from 'react-native-side-menu';
-import LeftDrawer from '../module/home/component/left-drawer';
-import TopTabView from '../module/home/component/TopTab/top-tab-view';
-import TopNavBar from '../module/global/component/top-nav-bar';
+import LeftDrawer from './left-drawer';
+import TopTabView from '../home/TopTab/top-tab-view';
+import TopNavBar from '../../component/top-nav-bar';
 
 const styles = StyleSheet.create({
     container:{
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     },  
 });
 
-export default class HomePage extends Component{
+export default class Index extends Component{
 
     constructor(props){
         super(props);
@@ -97,7 +97,7 @@ export default class HomePage extends Component{
                         sytle={styles.TopNavBar} 
                         leftSection={
                             <TouchableOpacity style={styles.topNavBarLeftIcon} onPress={this._updateLeftBarStatus}>
-                                <Image style={{width:40,height:40}} source={require('../../res/icon/list.png')} />
+                                <Image style={{width:40,height:40}} source={require('../../image/icon/list.png')} />
                             </TouchableOpacity>
                         }
                         centerSection={

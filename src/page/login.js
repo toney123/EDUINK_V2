@@ -3,9 +3,9 @@
  */
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,Image,TextInput} from 'react-native';
-import Button from '../module/global/component/button';
-import PressText from '../module/global/component/press-text';
-import Net from '../module/global/function/net';
+import Button from '../component/button';
+import PressText from '../component/press-text';
+import Net from '../util/net';
 
 const styles = StyleSheet.create({
     container:{
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     },
 });
 
-export default class LoginPage extends Component{
+export default class Login extends Component{
 
     constructor(props){
         super(props);
@@ -160,7 +160,7 @@ export default class LoginPage extends Component{
                 <View style={styles.containerTop}>
                     <View style={styles.imageTop}></View>
                     <View style={styles.imageCenter}>
-                        <Image style={styles.loginImage} source={require('../../res/icon/edu.png')} />
+                        <Image style={styles.loginImage} source={require('../image/icon/edu.png')} />
                     </View>
                     <View style={styles.imageBottom}></View>
                 </View>

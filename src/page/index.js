@@ -4,11 +4,10 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,AsyncStorage} from 'react-native';
 import Storage from 'react-native-storage';
-import {StackActions,NavigationActions } from 'react-navigation';
-import Net from '../module/global/function/net';
+import Net from '../util/net';
 
 
-export default class StartPage extends Component{
+export default class Index extends Component{
 
     constructor(props){
         super(props);

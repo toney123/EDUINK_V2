@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
-import TopNavBar from '../module/global/component/top-nav-bar';
+import TopNavBar from '../component/top-nav-bar';
 
 const styles = StyleSheet.create({
     container:{
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     }
 });
 
-export default class ChatPage extends Component{
+export default class Chat extends Component{
 
     constructor(props){
         super(props);
