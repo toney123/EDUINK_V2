@@ -114,7 +114,7 @@ export default class TopTabView extends Component{
                         // 增加state，引起刷新
                         selectTabIndex = {this.state.selectTabIndex}
                         // 设置自定义key，消除警告
-                        keyExtractor = {(item)=>item.name}
+                        keyExtractor = {(item,index)=>index.toString()}
                         ref = 'scrollTab'
                         renderItem = {({item,index})=> {
         
@@ -154,7 +154,7 @@ export default class TopTabView extends Component{
                         // 滚动结束时
                         onMomentumScrollEnd = {(e)=>this._scrollEnd(e)}
                         // 设置自定义key，消除警告
-                        keyExtractor = {(item)=>item.name}
+                        keyExtractor = {(item,index)=>index.toString()}
                         renderItem = {({item,index})=> {
                             const TabView = item.view;
                             return (

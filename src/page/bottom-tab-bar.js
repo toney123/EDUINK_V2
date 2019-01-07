@@ -89,7 +89,9 @@ export default class BottomTabBar extends Component{
                         renderIcon={() => <Image style={{width:25,height:25}} source={require('../image/icon/more.png')} />}
                         renderSelectedIcon={() => <Image style={{width:25,height:25}} source={require('../image/icon/more-selected.png')} />}
                         onPress={() => this.setState({ selectedTab: 'More' })}>
-                        <More/>
+                        <More
+                            navigation = {this.props.navigation}
+                        />
                     </TabNavigator.Item>
                 </TabNavigator>
             </View>

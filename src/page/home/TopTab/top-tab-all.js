@@ -221,7 +221,7 @@ export default class TopTabALL extends Component{
             <FlatList 
                 data={contents}
                 // 设置自定义key，消除警告
-                keyExtractor={(item)=>item.title}
+                keyExtractor={(item,index)=>index.toString()}
                 onScroll={(e)=>this._onScroll(e)}
                 renderItem={({item})=>{
                     return (
@@ -231,7 +231,7 @@ export default class TopTabALL extends Component{
                                 {/* 此处content卡片最外边的样式根据图片的数量而变化 */}
                                 <View style={this.state.previewContentStyle}>
                                     <View style={styles.previewContentLeft}></View>
-                                    <TouchableOpacity style={styles.previewContentCenter}>
+                                    <TouchableOpacity key={item.id} style={styles.previewContentCenter}>
                                         <View style={styles.contentType}>
                                             <View style={styles.contentTypeLeft}>
                                                 <View style={styles.contentTypeLeftMain}>

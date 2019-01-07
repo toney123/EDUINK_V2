@@ -5,7 +5,6 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,Image,TextInput} from 'react-native';
 import Button from '../component/button';
 import PressText from '../component/press-text';
-import Net from '../util/net';
 
 const styles = StyleSheet.create({
     container:{
@@ -97,7 +96,7 @@ export default class Login extends Component{
     }
 
     _login(){
-        let {xAppId,account,password} = this.state;
+        const {xAppId,account,password} = this.state;
 
         if(xAppId == ''){
             alert('School ID can not be empty');
@@ -129,7 +128,7 @@ export default class Login extends Component{
             let responseStatus = response.status;
             
             if(responseStatus == 200){
-                
+                // 存储登录信息
                 global.storage.save({
                     key: 'loginStatus', 
                     data: { 
@@ -137,11 +136,14 @@ export default class Login extends Component{
                         appId:responseJson.appId
                     },
                 });
+                // 更新全局变量
                 global.appId = responseJson.appId;
                 global.token = responseJson.sessionToken;
+
+                // 跳转至主页
                 this.props.navigation.navigate('Main');
             }else{
-                alert(Net.codeMessage(responseJson.appCode));
+                alert(responseJson.message);
             }
             
         })
@@ -151,6 +153,7 @@ export default class Login extends Component{
     }
 
     _switchForgetPasswordPage(){
+        // 跳转至忘记密码页面
         this.props.navigation.navigate('ForgetPassword');
     }
 

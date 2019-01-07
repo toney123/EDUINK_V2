@@ -4,7 +4,6 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,AsyncStorage} from 'react-native';
 import Storage from 'react-native-storage';
-import Net from '../util/net';
 
 
 export default class Index extends Component{
@@ -18,8 +17,8 @@ export default class Index extends Component{
 
     }
 
+    // 初始化存储设置
     _initStorge(){
-        // 初始化Storage
         global.storage = new Storage({
             // 最大容量，默认值1000条数据循环存储
             size: 1000,
@@ -35,8 +34,8 @@ export default class Index extends Component{
         });  
     }
 
+    // 加载存储信息
     _loadStorge(){
-        // 读取storage
         global.storage.load({
             key: 'loginStatus',
             
@@ -55,6 +54,7 @@ export default class Index extends Component{
         }).catch(err => {
             // 找不到token，则直接需要登录
             if(err.name == 'NotFoundError'){
+                // 跳转至登录页
                 this.props.navigation.navigate('Login');
             }else{
                 alert(err.message);
@@ -62,6 +62,7 @@ export default class Index extends Component{
         });
     }
 
+    // 删除存储信息
     _deleteStorge(){
         // 删除单个数据
         global.storage.remove({
@@ -77,26 +78,22 @@ export default class Index extends Component{
                 'X-App-Id':appId
             },
         }).then(response => {
-            let responseJson = JSON.parse(response._bodyText);
-            let responseStatus = response.status;
+            const responseJson = JSON.parse(response._bodyText);
+            const responseStatus = response.status;
 
+            // 更新全局变量
             global.appId = responseJson.appId;
             global.token = responseJson.sessionToken;
 
-            let message;
             let routeName;
             if(responseStatus == 200){
                 global.token = responseJson.sessionToken;
                 routeName = 'Main';
             }else{
-                message = Net.codeMessage(responseJson.appCode);
+                alert(responseJson.message);
                 routeName = 'Login';
             }
-
-            if(message != undefined){
-                alert(message);
-            }
-            
+            // 根据返回提示，如成功跳转至主页，否则跳转至登录页
             this.props.navigation.navigate(routeName);
         })
         .catch(error => {

@@ -9,32 +9,26 @@ import BottomTabBar from './src/page/bottom-tab-bar';
 import Login from './src/page/login';
 import ForgetPassword from './src/page/forget-password';
 import OneSignal from 'react-native-onesignal';
+import Calendar from './src/page/calendar';
 
 
 // StackNavigator，允许返回
 const MainStack = createStackNavigator({
-  Main: {
-    screen: BottomTabBar,
-    navigationOptions:()=>({
-      header:null
-    })
-  },
+  Main: {screen: BottomTabBar},
+  Calendar:{screen:Calendar}
+},{
+  initialRouteName:'Main',
+  defaultNavigationOptions:{
+    header:null
+  }
 });
 
 // SwitchNavigator单页，忽略返回
 const AppContainer = createAppContainer(createSwitchNavigator({
-  Login:{
-    screen:Login,
-  },
-  Index: {
-    screen:Index,
-  },
-  ForgetPassword:{
-    screen:ForgetPassword
-  },
-  Main:{
-    screen:MainStack
-  },
+  Login:{screen:Login},
+  Index:{screen:Index},
+  ForgetPassword:{screen:ForgetPassword},
+  Main:{screen:MainStack},
 },
   {
   initialRouteName:'Index'
@@ -58,18 +52,18 @@ export default class Route extends Component{
   }
 
   onReceived(notification) {
-    console.log("Notification received: ", notification);
+    // console.log("Notification received: ", notification);
   }
 
   onOpened(openResult) {
-    console.log('Message: ', openResult.notification.payload.body);
-    console.log('Data: ', openResult.notification.payload.additionalData);
-    console.log('isActive: ', openResult.notification.isAppInFocus);
-    console.log('openResult: ', openResult);
+    // console.log('Message: ', openResult.notification.payload.body);
+    // console.log('Data: ', openResult.notification.payload.additionalData);
+    // console.log('isActive: ', openResult.notification.isAppInFocus);
+    // console.log('openResult: ', openResult);
   }
 
   onIds(device) {
-    console.log('Device info: ', device);
+    // console.log('Device info: ', device);
   }
 
   render(){

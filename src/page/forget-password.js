@@ -5,7 +5,6 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,TextInput,TouchableOpacity} from 'react-native';
 import Button from '../component/button';
 import PressText from '../component/press-text';
-import Net from '../util/net';
 
 const styles = StyleSheet.create({
     container:{
@@ -98,7 +97,8 @@ export default class ForgetPassword extends Component{
         }
     }
 
-    _send(){
+    // 发送重置密码的邮件
+    _sendResetPasswordEmail(){
         if(this.state.xAppId == ''){
             alert('School ID can not be empty');
             return false;
@@ -119,29 +119,17 @@ export default class ForgetPassword extends Component{
             })
         })
         .then(response => {
-            let responseStatus = response.status;
-
-            let message;
-            let routeName;
-            switch(responseStatus){
-                case 401:
-                    message = Net.codeMessage(JSON.parse(response._bodyText).appCode);
-                    break;
-                case 409:
-                    message = 'Unable to execute instruction';
-                    break;
-                case 204:
-                    message = 'Sending mailbox successfully';
-                    routeName = 'Login';
-                    break;
-            }
-
-            if(message != undefined){
-                alert(message);
-            }
-            
-            if(routeName != undefined){
-                this.props.navigation.navigate(routeName);
+        
+            if(response.status == 204){
+                alert('Sending mailbox successfully');
+                // 跳转至登录页
+                this.props.navigation.navigate('Login');
+            }else{
+                if(response._bodyText != ''){
+                    const responseJson = JSON.parse(response._bodyText);
+                    alert(responseJson.message);
+                }
+                
             }
             
         })
@@ -151,6 +139,7 @@ export default class ForgetPassword extends Component{
     }
 
     _switchLoginPage(){
+        // 跳转至登录页
         this.props.navigation.navigate('Login');
     }
 
@@ -190,7 +179,7 @@ export default class ForgetPassword extends Component{
                     <View style={styles.sendCenter}>
                         <Button
                             name='SEND EMAIL'
-                            onPress={()=>this._send()}
+                            onPress={()=>this._sendResetPasswordEmail()}
                         /> 
                         <PressText
                             name='BACK TO LOGIN'

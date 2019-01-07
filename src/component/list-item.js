@@ -71,8 +71,10 @@ export default class ListItem extends Component{
         items:PropTypes.arrayOf(PropTypes.object).isRequired
     }
 
+    // 点击选项
     _clickItem(name){
-        alert('open:'+name);
+        // 跳转至指定页面
+        this.props.navigation.navigate(name);
     }
 
 
@@ -83,7 +85,7 @@ export default class ListItem extends Component{
             <FlatList
                 data={items}
                 // 设置自定义key，消除警告
-                keyExtractor = {(item)=>item.name}
+                keyExtractor = {(item,index)=>index.toString()}
                 renderItem={({item,index}) => {
                     let itemCenter = styles.itemCenter;
                     // 如果是最后一项，则不显示下划线
@@ -92,7 +94,7 @@ export default class ListItem extends Component{
                     }
     
                     return(
-                        <TouchableOpacity style={styles.item} onPress={()=>this._clickItem(item.name)}>
+                        <TouchableOpacity style={styles.item} onPress={()=>this._clickItem(item.routeName)}>
                             <View style={styles.itemLeft}></View>
                             <View style={itemCenter}>
                                 <View style={styles.itemCenterLeft}>

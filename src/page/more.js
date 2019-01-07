@@ -4,7 +4,6 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,Image,TouchableOpacity,FlatList} from 'react-native';
 import TopNavBar from '../component/top-nav-bar';
-import Net from '../util/net';
 import ListItem from '../component/list-item';
 
 const styles = StyleSheet.create({
@@ -34,9 +33,9 @@ const styles = StyleSheet.create({
     },
     userAvatar:{
         flex:1,
+        justifyContent:'center'
     },
     userImage:{
-        marginTop:'15%',
         alignSelf:'center',
         width:80,
         height:80,
@@ -51,13 +50,13 @@ const styles = StyleSheet.create({
     },
     userNameCenter:{
         flex:3,
+        justifyContent:'center'
     },
     userNameText:{
-        marginTop:'5%',
         color:'#78AEF9'
     },
     userEmailText:{
-        marginTop:'2%',
+        marginTop:5,
         color:'#8F9FB3'
     },
     userNameBottom:{
@@ -84,14 +83,14 @@ const styles = StyleSheet.create({
 });
 
 const businessItemData = [
-    {name:'Absentee note'},
-    {name:'Billing record'},
-    {name:'Calendar'},
-    {name:'Attendance'},
+    {name:'Absentee note',routeName:'AbsenteeNote'},
+    {name:'Billing record',routeName:'BillingRecord'},
+    {name:'Calendar',routeName:'Calendar'},
+    {name:'Attendance',routeName:'Attendance'},
 ];
 
 const systemItemData = [
-    {name:'Settings'}
+    {name:'Settings',routeName:'settings'}
 ];
 
 
@@ -103,50 +102,41 @@ export default class More extends Component{
             userName:'',
             email:''
         }
-        
     }
 
-    componentWillMount(){
+    // 获取当前帐号信息
+    _getAccountInfo(){
         fetch("https://devapi.edu.ink/auth/me", {
-        method: "GET",
-        headers: {
-            'X-App-Id':global.appId,
-            'X-Session-Token':global.token
-        },
-        }).then(response => {
-            let responseJson = JSON.parse(response._bodyText);
-            let responseStatus = response.status;
-
-            let message;
-            let routeName;
-            switch(responseStatus){
-                case 200:
+            method: "GET",
+            headers: {
+                'X-App-Id':global.appId,
+                'X-Session-Token':global.token
+            },
+            }).then(response => {
+                const responseJson = JSON.parse(response._bodyText);
+                const responseStatus = response.status;
+    
+                if(responseStatus == 200){
                     this.setState({
                         userName:responseJson.firstName+' '+responseJson.lastName,
                         email:responseJson.email
                     })
-                    break;
-                case 401:
-                    message = Net.codeMessage(responseJson.appCode);
-                    routeName = 'Login';
-                    break;
-                case 403:
-                    message = Net.codeMessage(responseJson.appCode);
-                    break;
-            }
+                }else{
+                    alert(responseJson.message);
+                    // session token 过期
+                    if(responseJson.appCode == 'ERR_INVALID_SESSION_TOKEN'){
+                        // 跳转至登录页
+                        this.props.navigation.navigate(routeName);
+                    }
+                }
+                
+            }).catch(error => {
+                alert(error);
+            });
+    }
 
-            if(message != undefined){
-                alert(message);
-            }
-            
-            if(routeName != undefined){
-                this.props.navigation.navigate(routeName);
-            }   
-            
-        })
-        .catch(error => {
-          alert(error);
-        });
+    componentWillMount(){
+       this._getAccountInfo();
     }
 
 
@@ -179,7 +169,8 @@ export default class More extends Component{
                         <View style={styles.userBottom}></View>
                     </View>
                     <View style={styles.businessItems}>
-                        <ListItem 
+                        <ListItem
+                            navigation = {this.props.navigation} 
                             items={businessItemData}
                         />
                     </View>
@@ -187,6 +178,7 @@ export default class More extends Component{
                         <View style={styles.systemItemsTop}></View>
                         <View style={styles.systemItemsCenter}>
                             <ListItem 
+                                navigation = {this.props.navigation} 
                                 items={systemItemData}
                             />
                         </View>
