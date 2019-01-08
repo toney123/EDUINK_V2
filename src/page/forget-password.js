@@ -2,7 +2,7 @@
  * 重置密码
  */
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View,TextInput,TouchableOpacity} from 'react-native';
+import {Platform, StyleSheet, Text, View,TextInput,TouchableOpacity,KeyboardAvoidingView} from 'react-native';
 import Button from '../component/button';
 import PressText from '../component/press-text';
 
@@ -30,12 +30,8 @@ const styles = StyleSheet.create({
     titleRight:{
         flex:1,
     },
-    containerCenter:{
-        flex:2,
-    },
     containerBottom:{
         flex:3,
-        flexDirection:'row',
     },
     form:{
         flex:1,
@@ -47,9 +43,7 @@ const styles = StyleSheet.create({
     formCenter:{
         flex:8,
         marginTop:'5%',
-        backgroundColor:'#FFF',
         flexDirection:'row',
-        borderRadius:5,
     },
     formInputLeft:{
         flex:1,
@@ -76,15 +70,6 @@ const styles = StyleSheet.create({
     formright:{
         flex:1,
     },
-    sendLeft:{
-        flex:1,
-    },
-    sendCenter:{
-        flex:3,
-    },
-    sendRight:{
-        flex:1,
-    }
 });
 
 export default class ForgetPassword extends Component{
@@ -146,7 +131,7 @@ export default class ForgetPassword extends Component{
 
     render(){
         return(
-            <View style={styles.container}>
+            <KeyboardAvoidingView style={styles.container} behavior='padding'>
                 <View style={styles.containerTop}>
                     <View style={styles.titleLeft}></View>
                     <View style={styles.titleCenter}>
@@ -154,7 +139,7 @@ export default class ForgetPassword extends Component{
                     </View>
                     <View style={styles.titleRight}></View>
                 </View>
-                <View style={styles.containerCenter}>
+                <View style={styles.containerBottom}>
                     <View style={styles.form}>
                         <View style={styles.formLeft}></View>
                         <View style={styles.formCenter}>
@@ -167,28 +152,22 @@ export default class ForgetPassword extends Component{
                                 <View style={styles.formInput}>
                                     <Text style={styles.formText}>EMAIL</Text>
                                     <TextInput style={styles.formTextInput} onChangeText={(text)=>this.setState({email:text})} value={this.state.email} />
-                                </View> 
+                                </View>
+                                <Button
+                                    name='SEND EMAIL'
+                                    onPress={()=>this._sendResetPasswordEmail()}
+                                /> 
+                                <PressText
+                                    name='BACK TO LOGIN'
+                                    onPress={()=>this._switchLoginPage()}
+                                /> 
                             </View>
                             <View style={styles.formInputRight}></View>
                         </View>
                         <View style={styles.formright}></View>
                     </View>
                 </View>
-                <View style={styles.containerBottom}>
-                    <View style={styles.sendLeft}></View>
-                    <View style={styles.sendCenter}>
-                        <Button
-                            name='SEND EMAIL'
-                            onPress={()=>this._sendResetPasswordEmail()}
-                        /> 
-                        <PressText
-                            name='BACK TO LOGIN'
-                            onPress={()=>this._switchLoginPage()}
-                        />
-                    </View>
-                    <View style={styles.sendRight}></View>
-                </View>
-            </View>
+            </KeyboardAvoidingView>
         );
     }
 }

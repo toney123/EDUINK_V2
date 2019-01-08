@@ -2,7 +2,7 @@
  * 登录页
  */
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View,Image,TextInput} from 'react-native';
+import {Platform, StyleSheet, Text, View,Image,TextInput,KeyboardAvoidingView} from 'react-native';
 import Button from '../component/button';
 import PressText from '../component/press-text';
 
@@ -14,12 +14,8 @@ const styles = StyleSheet.create({
         flex:1,
         flexDirection:'row',
     },
-    containerCenter:{
-        flex:1.3,
-    },
     containerBottom:{
-        flex:1,
-        flexDirection:'row'
+        flex:2,
     },
     form:{
         flex:1,
@@ -30,9 +26,6 @@ const styles = StyleSheet.create({
     },
     formCenter:{
         flex:6,
-        flexDirection:'row',
-        borderRadius:3,
-        backgroundColor:'#FFF',
     },
     formRight:{
         flex:1,
@@ -73,15 +66,12 @@ const styles = StyleSheet.create({
     imageBottom:{
         flex:1,
     },
-    loginLeft:{
-        flex:1,
+    formTop:{
+        flex:1
     },
-    loginCenter:{
-        flex:4,
-    },
-    loginRight:{
-        flex:1,
-    },
+    formBottom:{
+        flex:1
+    }
 });
 
 export default class Login extends Component{
@@ -159,7 +149,7 @@ export default class Login extends Component{
 
     render(){
         return(
-            <View style={styles.container}>
+            <KeyboardAvoidingView style={styles.container} behavior='padding'>
                 <View style={styles.containerTop}>
                     <View style={styles.imageTop}></View>
                     <View style={styles.imageCenter}>
@@ -167,45 +157,42 @@ export default class Login extends Component{
                     </View>
                     <View style={styles.imageBottom}></View>
                 </View>
-                <View style={styles.containerCenter}>
+                <View style={styles.containerBottom}>
                     <View style={styles.form}>
                         <View style={styles.formLeft}></View>
                         <View style={styles.formCenter}>
-                            <View style={styles.formInputLeft}></View>
-                            <View style={styles.formInputCenter}>
-                                <View style={styles.formInput}>
-                                    <Text style={styles.formLabel}>SCHOOL</Text>
-                                    <TextInput onChangeText={(text)=>{this.setState({xAppId:text})}} style={styles.formTextInput} value={this.state.xAppId} />
+                            <View style={styles.formTop}>
+                                <View style={styles.formInputLeft}></View>
+                                <View style={styles.formInputCenter}>
+                                    <View style={styles.formInput}>
+                                        <Text style={styles.formLabel}>SCHOOL</Text>
+                                        <TextInput onChangeText={(text)=>{this.setState({xAppId:text})}} style={styles.formTextInput} value={this.state.xAppId} />
+                                    </View>
+                                    <View style={styles.formInput}>
+                                        <Text style={styles.formLabel}>EMAIL/USERNAME/MOBILE PHONE</Text>
+                                        <TextInput onChangeText={(text)=>{this.setState({account:text})}} style={styles.formTextInput} value={this.state.account} />
+                                    </View>
+                                    <View style={styles.formInput}>
+                                        <Text style={styles.formLabel}>PASSWORD</Text>
+                                        <TextInput onChangeText={(text)=>{this.setState({password:text})}} style={styles.formTextInput} secureTextEntry={true} value={this.state.password} />
+                                    </View>
+                                    <Button
+                                        buttonStyle={{marginTop:30}}
+                                        name = 'LOGIN'
+                                        onPress = {()=>this._login()}
+                                    />
+                                    <PressText 
+                                        name='I FORGET MY PASSWORD'
+                                        onPress={()=>this._switchForgetPasswordPage()}
+                                    />   
                                 </View>
-                                <View style={styles.formInput}>
-                                    <Text style={styles.formLabel}>EMAIL/USERNAME/MOBILE PHONE</Text>
-                                    <TextInput onChangeText={(text)=>{this.setState({account:text})}} style={styles.formTextInput} value={this.state.account} />
-                                </View>
-                                <View style={styles.formInput}>
-                                    <Text style={styles.formLabel}>PASSWORD</Text>
-                                    <TextInput onChangeText={(text)=>{this.setState({password:text})}} style={styles.formTextInput} secureTextEntry={true} value={this.state.password} />
-                                </View>
+                                <View style={styles.formInputRight}></View>
                             </View>
-                            <View style={styles.formInputRight}></View>
                         </View>
                         <View style={styles.formRight}></View>
                     </View>
                 </View>
-                <View style={styles.containerBottom}>
-                    <View style={styles.loginLeft}></View>
-                    <View style={styles.loginCenter}>
-                        <Button
-                            name = 'LOGIN'
-                            onPress = {()=>this._login()}
-                        />
-                        <PressText 
-                            name='I FORGET MY PASSWORD'
-                            onPress={()=>this._switchForgetPasswordPage()}
-                        />
-                    </View>
-                    <View style={styles.loginRight}></View>
-                </View>
-            </View>
+            </KeyboardAvoidingView>
         );
     }
 }

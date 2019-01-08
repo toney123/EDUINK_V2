@@ -1,17 +1,3 @@
-/**
- * 可按压文本组件
- * 
- * 需要传入以下属性：
- * 
- * onPress(可选)
- * 类型:function
- * 说明：按压事件
- * 
- * name(可选)
- * 类型:string
- * 说明：文本名
- * 
- */
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text,TouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
@@ -26,11 +12,16 @@ const styles = StyleSheet.create({
     }
 });
 
+/**
+ * @param {String} [name] - 文字名
+ * @param {function} [onPress] - 点击文本触发的事件
+ * 
+ * 可按压文本组件
+ */
 export default class PressText extends Component{
 
     // 属性默认值
     static defaultProps = {
-        onPress:()=>{},
         name:'press Text'
     }
 

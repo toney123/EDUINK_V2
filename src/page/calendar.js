@@ -4,6 +4,7 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,AsyncStorage,Image,TouchableOpacity} from 'react-native';
 import TopNavBar from '../component/top-nav-bar';
+import { Calendar as Calendars, CalendarList, Agenda } from 'react-native-calendars';
 
 const iconUri = '../image/icon/';
 
@@ -33,10 +34,14 @@ const styles = StyleSheet.create({
         justifyContent:'center'
     },
     calendar:{
-        flex:3,
+        flex:5,
+    },
+    calendarCenter:{
+        marginTop:10,
+        marginBottom:10,
     },
     activity:{
-        flex:3
+        flex:5
     },
     selectTypeButton:{
         width:180,
@@ -69,7 +74,21 @@ const styles = StyleSheet.create({
     } 
 });
 
+
+
 export default class Calendar extends Component{
+
+    constructor(){
+        super();
+    }
+
+    // 点击日期
+    _clickDay(date){
+        
+    }
+
+
+
     render(){
         return(
             <View style={styles.container}>
@@ -97,7 +116,19 @@ export default class Calendar extends Component{
                         </View>
                         
                     </View>
-                    <View style={styles.calendar}></View>
+                    <View style={styles.calendar}>
+                        <View style={styles.calendarCenter}>
+                            <Calendars
+                                onDayPress={(day) => {this._clickDay(day.dateString)}}
+                                markedDates={{
+                                    '2019-01-01': {selected: true, marked: true, selectedColor: '#4A98F7'},
+                                    '2019-01-02': {marked: true},
+                                    '2019-01-05': {marked: true, dotColor: 'red', activeOpacity: 0},
+                                    '2019-01-06': {disabled: true, disableTouchEvent: true}
+                                }}
+                            />
+                        </View>
+                    </View>
                     <View style={styles.activity}></View>
                 </View>
             </View>

@@ -1,14 +1,3 @@
-/**
- * 更多页里的列表项
- * 
- * 需要传入以下属性：
- * 
- * items(必须)
- * 类型:array
- * 格式：[{name:''}]
- * 说明：列表选项数据
- * 
- */
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,Image,TouchableOpacity,FlatList} from 'react-native';
 import PropTypes from 'prop-types';
@@ -59,6 +48,10 @@ const styles = StyleSheet.create({
 });
 
 
+/**
+ * @param {array} items - 列表选项数据
+ * 更多页里的列表项
+ */
 export default class ListItem extends Component{
 
     // 属性默认值

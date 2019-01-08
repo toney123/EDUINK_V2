@@ -1,21 +1,3 @@
-/**
- * 导航栏
- * 
- * 需要传入以下属性：
- * 
- * leftSection(可选)
- * 类型：react element
- * 说明：自定义导航栏左边的部分
- * 
- * centerSection(可选)
- * 类型：react element
- * 说明：自定义导航栏中间的部分
- * 
- * rightSection(可选)
- * 类型：react element
- * 说明：自定义导航栏右边的部分
- * 
- */
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,StatusBar,TouchableOpacity,Dimensions} from 'react-native';
 import PropTypes from 'prop-types';
@@ -42,7 +24,13 @@ const styles = StyleSheet.create({
     },
 });
 
-
+/**
+ * @param {element} [leftSection] - 自定义导航栏左边的部分
+ * @param {element} [centerSection] - 自定义导航栏中间的部分
+ * @param {element} [centerSection] - 自定义导航栏右边的部分
+ * 
+ * 导航栏
+ */
 export default class TopNavBar extends Component{
 
     // 属性默认值
