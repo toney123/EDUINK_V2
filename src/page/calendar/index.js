@@ -23,10 +23,6 @@ const styles = StyleSheet.create({
         textAlign:'center',
         fontSize:18
     },
-    topNavBarLeftIcon:{
-        left:5,
-        bottom:10,
-    }, 
     selectType:{
         flex:1,
         backgroundColor:'#FFF',
@@ -208,11 +204,6 @@ export default class Index extends Component{
             <View style={styles.container}>
                 <View style={styles.containerTop}>
                     <TopNavBar 
-                        leftSection={
-                            <TouchableOpacity style={styles.topNavBarLeftIcon} onPress={()=>this.props.navigation.goBack()}>
-                                <Image style={{width:40,height:40}} source={require(iconUri+'back.png')} />
-                            </TouchableOpacity>
-                        }
                         centerSection={
                             <Text style={styles.topNavBarCenterText}>Calendar</Text>
                         }
