@@ -94,79 +94,54 @@ export default class LeftDrawer extends Component{
         super(props);
     }
 
+    componentWillMount(){
+        
+    }
+
 
     componentWillUpdate(){
-       
+     
     }
 
 
     render(){
+
+        let children=[];
+        if(this.props.children.length){
+            for (const child of this.props.children) {
+                children.push(
+                    <TouchableOpacity key={child._id} onPress={()=>{this.props.updateState(0)}}>
+                        <View style={styles.person}>
+                            <View style={styles.personLeft}>
+                                <View style={styles.avatar}>
+                                    <Text style={styles.avatarText}></Text>
+                                </View>
+                            </View>
+                            <View style={styles.personCenter}>
+                                <View style={styles.studentTop}>
+                                    <Text style={styles.studentName}>{child.firstName+' '+child.lastName}</Text>
+                                </View>
+                                <View style={styles.studentBottom}>
+                                    <Text style={styles.studentClassName}>{child._class.name}</Text>
+                                </View>
+                            </View>
+                            <View style={styles.personRight}>
+                                <View style={styles.clickPerson}></View>
+                            </View>
+                        </View>
+                    </TouchableOpacity>
+                );
+            }
+            
+        }
+
+
         return(
             <View style={styles.container}>
 
                 <View style={styles.containerTop}></View>
                 <View style={styles.containerCenter}>
-                    {/* 所有学生 */}
-                    <TouchableOpacity onPress={()=>{this.props.updateState(0)}}>
-                        <View style={styles.person}>
-                            <View style={styles.personLeft}>
-                                <View style={styles.avatar}>
-                                    <Text style={styles.avatarText}>ALL</Text>
-                                </View>
-                            </View>
-                            <View style={styles.personCenter}>
-                                <View style={styles.studentTop}>
-                                    <Text style={styles.studentName}>All Children</Text>
-                                </View>
-                                <View style={styles.studentBottom}>
-                                    <Text style={styles.studentClassName}>中六班</Text>
-                                </View>
-                            </View>
-                            <View style={styles.personRight}>
-                                <View style={styles.clickPerson}></View>
-                            </View>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>{this.props.updateState(1)}}>
-                        <View style={styles.person}>
-                            <View style={styles.personLeft}>
-                                <View style={styles.avatar}>
-                                    <Text style={styles.avatarText}>ALL</Text>
-                                </View>
-                            </View>
-                            <View style={styles.personCenter}>
-                                <View style={styles.studentTop}>
-                                    <Text style={styles.studentName}>Test Yu</Text>
-                                </View>
-                                <View style={styles.studentBottom}>
-                                    <Text style={styles.studentClassName}>中六班</Text>
-                                </View>
-                            </View>
-                            <View style={styles.personRight}>
-                                <View style={styles.clickPerson}></View>
-                            </View>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>{this.props.updateState(2)}}>
-                        <View style={styles.person}>
-                            <View style={styles.personLeft}>
-                                <View style={styles.avatar}>
-                                    <Text style={styles.avatarText}>ALL</Text>
-                                </View>
-                            </View>
-                            <View style={styles.personCenter}>
-                                <View style={styles.studentTop}>
-                                    <Text style={styles.studentName}>Test Li</Text>
-                                </View>
-                                <View style={styles.studentBottom}>
-                                    <Text style={styles.studentClassName}>中六班</Text>
-                                </View>
-                            </View>
-                            <View style={styles.personRight}>
-                                <View style={styles.clickPerson}></View>
-                            </View>
-                        </View>
-                    </TouchableOpacity>
+                    {children.map((value,index)=>value)}
                 </View>
                 <View style={styles.containerBottom}></View>      
             </View>

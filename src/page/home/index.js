@@ -7,6 +7,7 @@ import SideMenu from 'react-native-side-menu';
 import LeftDrawer from './left-drawer';
 import TopTabView from '../home/TopTab/top-tab-view';
 import TopNavBar from '../../component/top-nav-bar';
+import {host} from '../../util/constant';
 
 const styles = StyleSheet.create({
     container:{
@@ -36,6 +37,7 @@ export default class Index extends Component{
         this.state = {
             sideMenuStatus:false,
             currentChildId:0,
+            children:[]
         }
         this._updateLeftBarStatus = this._updateLeftBarStatus.bind(this);
         this.updateState = this.updateState.bind(this);
@@ -64,6 +66,40 @@ export default class Index extends Component{
             });
         }
     }
+
+    // 获取家长的所有孩子
+    _getChildren(){
+        fetch(host+"/grd/children?populate=_class", {
+            method: "GET",
+            headers: {
+                'X-Session-Token':global.token,
+                'X-App-Id':global.appId
+            },
+        }).then(response => {
+            const responseJson = JSON.parse(response._bodyText);
+            const responseStatus = response.status;
+
+            if(responseStatus == 200){
+
+                global.children = responseJson;
+
+                this.setState({
+                    children:responseJson
+                });
+
+            }else{
+                alert(responseJson.message);
+            }
+        })
+        .catch(error => {
+          alert(error);
+        });
+    }
+
+
+    componentWillMount(){
+        this._getChildren();
+    }
     
 
     componentWillUpdate(){
@@ -87,7 +123,10 @@ export default class Index extends Component{
                 {/* 侧栏 */}
                 <SideMenu
                     // 侧栏主体内容
-                    menu={<LeftDrawer updateState={this.updateState} />}
+                    menu={<LeftDrawer 
+                            updateState={this.updateState} 
+                            children={this.state.children}
+                        />}
                     openMenuOffset={Dimensions.get('window').width / 1.5}
                     isOpen={this.state.sideMenuStatus}
                     onChange={(isOpen)=>{this._reviseSideMenuStatus(isOpen)}}

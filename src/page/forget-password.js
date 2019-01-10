@@ -5,6 +5,7 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,TextInput,TouchableOpacity,KeyboardAvoidingView} from 'react-native';
 import Button from '../component/button';
 import PressText from '../component/press-text';
+import {host} from '../util/constant';
 
 const styles = StyleSheet.create({
     container:{
@@ -94,7 +95,7 @@ export default class ForgetPassword extends Component{
         }
         
 
-        fetch("https://devapi.edu.ink/auth/request-password-reset", {
+        fetch(host+"/auth/request-password-reset", {
         method: "POST",
         headers: {
             'X-App-Id':this.state.xAppId

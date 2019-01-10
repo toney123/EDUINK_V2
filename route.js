@@ -9,13 +9,19 @@ import BottomTabBar from './src/page/bottom-tab-bar';
 import Login from './src/page/login';
 import ForgetPassword from './src/page/forget-password';
 import OneSignal from 'react-native-onesignal';
-import Calendar from './src/page/calendar';
+import Calendar from './src/page/calendar/index';
+import CalendarDetail from './src/page/calendar/detail';
+import CreateAbsenteeNote from './src/page/absentee/create';
+import ConfirmAbsenteeNote from './src/page/absentee/confirm';
 
 
 // StackNavigator，允许返回
 const MainStack = createStackNavigator({
   Main: {screen: BottomTabBar},
-  Calendar:{screen:Calendar}
+  Calendar:{screen:Calendar},
+  CalendarDetail:{screen:CalendarDetail},
+  CreateAbsenteeNote:{screen:CreateAbsenteeNote},
+  ConfirmAbsenteeNote:{screen:ConfirmAbsenteeNote}
 },{
   initialRouteName:'Main',
   defaultNavigationOptions:{

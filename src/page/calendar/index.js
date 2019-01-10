@@ -3,10 +3,10 @@
  */
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,AsyncStorage,Image,TouchableOpacity,ScrollView} from 'react-native';
-import TopNavBar from '../component/top-nav-bar';
+import TopNavBar from '../../component/top-nav-bar';
 import { Calendar as Calendars, CalendarList, Agenda } from 'react-native-calendars';
 
-const iconUri = '../image/icon/';
+const iconUri = '../../image/icon/';
 
 const styles = StyleSheet.create({
     container:{
@@ -128,13 +128,17 @@ const styles = StyleSheet.create({
 
 
 
-export default class Calendar extends Component{
+export default class Index extends Component{
 
     constructor(){
         super();
         this.state = {
             selectType:'Month'
         }
+    }
+
+    componentWillMount(){
+        
     }
 
     // 点击日期
@@ -174,7 +178,7 @@ export default class Calendar extends Component{
                         }}
                     />
                     <View style={styles.calendarActivity}>
-                        <View style={styles.activityCard}>
+                        <TouchableOpacity style={styles.activityCard} onPress={()=>this.props.navigation.navigate('CalendarDetail')}>
                             <View style={styles.activityCardLeft}>
                                 <Text style={styles.activityText}>123213213</Text>
                                 <View style={styles.activityTime}>
@@ -187,21 +191,7 @@ export default class Calendar extends Component{
                                     <Text style={styles.userText}>HC</Text>
                                 </View>
                             </View>
-                        </View>
-                        <View style={styles.activityCard}>
-                            <View style={styles.activityCardLeft}>
-                                <Text style={styles.activityText}>123213213</Text>
-                                <View style={styles.activityTime}>
-                                    <View style={styles.activitySign}></View>
-                                    <Text style={styles.activityTimeText}>14:53-15:00</Text>
-                                </View>
-                            </View>
-                            <View style={styles.activityCardRight}>
-                                <View style={styles.user}>
-                                    <Text style={styles.userText}>HC</Text>
-                                </View>
-                            </View>
-                        </View>
+                        </TouchableOpacity>
                     </View>
                 </ScrollView>
             );

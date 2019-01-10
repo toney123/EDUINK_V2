@@ -5,6 +5,7 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,Image,TouchableOpacity,FlatList} from 'react-native';
 import TopNavBar from '../component/top-nav-bar';
 import ListItem from '../component/list-item';
+import {host} from '../util/constant';
 
 const styles = StyleSheet.create({
     container:{
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
 });
 
 const businessItemData = [
-    {name:'Absentee note',routeName:'AbsenteeNote'},
+    {name:'Absentee note',routeName:'CreateAbsenteeNote'},
     {name:'Billing record',routeName:'BillingRecord'},
     {name:'Calendar',routeName:'Calendar'},
     {name:'Attendance',routeName:'Attendance'},
@@ -106,7 +107,7 @@ export default class More extends Component{
 
     // 获取当前帐号信息
     _getAccountInfo(){
-        fetch("https://devapi.edu.ink/auth/me", {
+        fetch(host+"/auth/me", {
             method: "GET",
             headers: {
                 'X-App-Id':global.appId,

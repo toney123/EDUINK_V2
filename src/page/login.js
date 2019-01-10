@@ -5,6 +5,7 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,Image,TextInput,KeyboardAvoidingView} from 'react-native';
 import Button from '../component/button';
 import PressText from '../component/press-text';
+import {host} from '../util/constant';
 
 const styles = StyleSheet.create({
     container:{
@@ -102,7 +103,7 @@ export default class Login extends Component{
         }
         
 
-        fetch("https://devapi.edu.ink/auth/session", {
+        fetch(host+"/auth/session", {
         method: "POST",
         headers: {
             'X-App-Id':xAppId

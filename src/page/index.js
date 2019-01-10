@@ -4,7 +4,7 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,AsyncStorage} from 'react-native';
 import Storage from 'react-native-storage';
-
+import {host} from '../util/constant';
 
 export default class Index extends Component{
 
@@ -71,7 +71,7 @@ export default class Index extends Component{
     }
     // 检查token是否已过期
     _checkTokenDeadline(token,appId){
-        fetch("https://devapi.edu.ink/auth/session", {
+        fetch(host+"/auth/session", {
             method: "GET",
             headers: {
                 'X-Session-Token':token,
