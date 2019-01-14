@@ -115,13 +115,13 @@ const styles = StyleSheet.create({
     }
 });
 
-let childrenIds=[];
+
 export default class Create extends Component{
 
     constructor(){
         super();
         this.state = {
-            childrenIds:childrenIds,
+            childrenId:null,
             startDate:'',
             endDate:'',
             reasonText:''
@@ -132,10 +132,11 @@ export default class Create extends Component{
 
     _previewInfo(){
         // 验证是否有选中孩子
-        if(childrenIds.length == 0){
-            alert('Please choose at least one child');
+        if(this.state.childrenId == null){
+            alert('Please choose a child');
             return false;
         }
+
         if(this.state.startDate == ''){
             alert('Please choose the start Date');
             return false;
@@ -152,24 +153,13 @@ export default class Create extends Component{
         }
 
         this.props.navigation.navigate('ConfirmAbsenteeNote',{
-            childrenIds:childrenIds,
+            childrenId:this.state.childrenId ,
             startDate:this.state.startDate,
             endDate:this.state.endDate,
             reasonText:this.state.reasonText
         });
     }
 
-    _selectChild(id){
-        // 不存在相同的值，则存入
-        if(childrenIds.indexOf(id) == -1){
-            childrenIds.push(id);
-        }else{
-            childrenIds.splice(childrenIds.indexOf(id),1);
-        }
-        this.setState({
-            childrenIds:childrenIds
-        });
-    }
 
     _startDatePicker(){
         this.refs.startDatePicker.open({
@@ -233,14 +223,14 @@ export default class Create extends Component{
                                 );
 
                                 // 选中
-                                if(childrenIds.indexOf(item._id) != -1){
+                                if(this.state.childrenId == item._id){
                                     selected = (
                                         <Image style={{width:20,height:20}} source={require(iconUri+'selected.png')} />
                                     );
                                 }
 
                                 return(
-                                    <TouchableOpacity style={styles.absenteeStudentTouch} onPress={()=>this._selectChild(item._id)}>
+                                    <TouchableOpacity style={styles.absenteeStudentTouch} onPress={()=>this.setState({childrenId:item._id})}>
                                         <View style={styles.absenteeStudentTouchLeft}></View>
                                         <View style={styles.absenteeStudentTouchCenter}>
                                             <Text style={styles.absenteeStudentTouchText}>{item.firstName+' '+item.lastName}</Text>

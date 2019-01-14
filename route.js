@@ -13,6 +13,7 @@ import Calendar from './src/page/calendar/index';
 import CalendarDetail from './src/page/calendar/detail';
 import CreateAbsenteeNote from './src/page/absentee/create';
 import ConfirmAbsenteeNote from './src/page/absentee/confirm';
+import AbsenteeNoteDetail from './src/page/absentee/detail';
 
 
 // StackNavigator，允许返回
@@ -21,7 +22,8 @@ const MainStack = createStackNavigator({
   Calendar:{screen:Calendar},
   CalendarDetail:{screen:CalendarDetail},
   CreateAbsenteeNote:{screen:CreateAbsenteeNote},
-  ConfirmAbsenteeNote:{screen:ConfirmAbsenteeNote}
+  ConfirmAbsenteeNote:{screen:ConfirmAbsenteeNote},
+  AbsenteeNoteDetail:{screen:AbsenteeNoteDetail},
 },{
   initialRouteName:'Main',
   defaultNavigationOptions:{

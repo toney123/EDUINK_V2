@@ -37,6 +37,7 @@ export default class Index extends Component{
         this.state = {
             sideMenuStatus:false,
             currentChildId:0,
+            currentChildName:'All Children',
             children:[]
         }
         this._updateLeftBarStatus = this._updateLeftBarStatus.bind(this);
@@ -51,10 +52,11 @@ export default class Index extends Component{
         });
     }
     // 提供给子组件来更新父组件的state
-    updateState(id){
+    updateState(id,name){
         this.setState({
             sideMenuStatus:!this.state.sideMenuStatus,
-            currentChildId:id
+            currentChildId:id,
+            currentChildName:name
         });
     }
 
@@ -76,19 +78,19 @@ export default class Index extends Component{
                 'X-App-Id':global.appId
             },
         }).then(response => {
-            const responseJson = JSON.parse(response._bodyText);
+            const data = JSON.parse(response._bodyText);
             const responseStatus = response.status;
 
             if(responseStatus == 200){
 
-                global.children = responseJson;
+                global.children = data;
 
                 this.setState({
-                    children:responseJson
+                    children:data
                 });
 
             }else{
-                alert(responseJson.message);
+                alert(data.message);
             }
         })
         .catch(error => {
@@ -108,14 +110,6 @@ export default class Index extends Component{
 
 
     render(){
-
-        let id = this.state.currentChildId;
-        let chilName = 'All Children';
-        if(id == 1){
-            chilName = 'Test Yu';
-        }else if(id == 2){
-            chilName = 'Test Li';
-        }
 
 
         return(
@@ -140,12 +134,14 @@ export default class Index extends Component{
                             </TouchableOpacity>
                         }
                         centerSection={
-                            <Text style={styles.topNavBarCenterText}>{chilName}</Text>
+                            <Text style={styles.topNavBarCenterText}>{this.state.currentChildName}</Text>
                         }
                     />
                     <View style={styles.labelBar}> 
                         {/* 选项栏 */}
-                        <TopTabView />    
+                        <TopTabView 
+                            currentChildId = {this.state.currentChildId}
+                        />    
                     </View>
                 </SideMenu>  
             </View>

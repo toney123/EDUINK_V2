@@ -100,6 +100,16 @@ export default class TopTabView extends Component{
     }
 
 
+    componentWillMount(){
+        
+    }
+
+
+    componentWillUpdate(){
+       
+    }
+
+
     render(){
 
         return(
@@ -160,7 +170,10 @@ export default class TopTabView extends Component{
                             return (
                                 <View style={{width:screenWidth}}>
                                     {/* 提供修改父组件 */}
-                                    <TabView updateParentTopTabItemColor={this.updateTopTabItemColor} />
+                                    <TabView 
+                                        updateParentTopTabItemColor={this.updateTopTabItemColor} 
+                                        currentChildId = {this.props.currentChildId}
+                                    />
                                 </View>
                             );
                         }}

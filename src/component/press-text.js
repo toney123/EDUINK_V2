@@ -13,10 +13,9 @@ const styles = StyleSheet.create({
 });
 
 /**
+ * 可按压文本组件
  * @param {String} [name] - 文字名
  * @param {function} [onPress] - 点击文本触发的事件
- * 
- * 可按压文本组件
  */
 export default class PressText extends Component{
 

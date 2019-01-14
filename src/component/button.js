@@ -17,12 +17,11 @@ const styles = StyleSheet.create({
 });
 
 /**
+ * 按钮组件
  * @param {String} [name] - 按钮文字
  * @param {function} [onPress] - 点击按钮触发的事件
  * @param {Object} [buttonStyle] - 按钮样式
  * @param {Object} [textStyle] - 按钮的文字样式
- * 
- * 按钮组件
  */
 export default class Button extends Component{
 
@@ -34,7 +33,9 @@ export default class Button extends Component{
     // 属性验证
     static propTypes = {
         onPress:PropTypes.func,
-        name:PropTypes.string
+        name:PropTypes.string,
+        buttonStyle:PropTypes.object,
+        textStyle:PropTypes.object
     }
 
     render(){

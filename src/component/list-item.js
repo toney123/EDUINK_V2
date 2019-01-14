@@ -49,8 +49,8 @@ const styles = StyleSheet.create({
 
 
 /**
- * @param {array} items - 列表选项数据
  * 更多页里的列表项
+ * @param {array} items - 列表选项数据
  */
 export default class ListItem extends Component{
 

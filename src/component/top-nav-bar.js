@@ -25,11 +25,10 @@ const styles = StyleSheet.create({
 });
 
 /**
+ * 导航栏
  * @param {element} [leftSection] - 自定义导航栏左边的部分
  * @param {element} [centerSection] - 自定义导航栏中间的部分
  * @param {element} [centerSection] - 自定义导航栏右边的部分
- * 
- * 导航栏
  */
 export default class TopNavBar extends Component{
 

@@ -95,7 +95,7 @@ const systemItemData = [
 ];
 
 
-export default class More extends Component{
+export default class My extends Component{
 
     constructor(props){
         super(props);

@@ -6,6 +6,7 @@ import {Platform, StyleSheet, Text, View,TouchableOpacity,Image,FlatList,TextInp
 import TopNavBar from '../../component/top-nav-bar';
 import Button from '../../component/button';
 import {host} from '../../util/constant';
+import Leave from './common/leave';
 
 const iconUri = '../../image/icon/';
 
@@ -28,125 +29,79 @@ const styles = StyleSheet.create({
         left:5,
         bottom:10,
     }, 
-    leave:{
-        marginTop:30,
-        marginLeft:20,
-        marginRight:20,
-        backgroundColor:'#FFF',
-        height:280,
-        borderRadius:8
-    },
-    leaveTop:{
-        flex:1,
-        alignItems:'center',
-        justifyContent:'center'
-    },
-    excuseText:{
-        fontSize:20,
-        color:'#42436A'
-    },
-    leaveBottom:{
-        flex:3
-    },
-    cutLine:{
-        borderBottomWidth:1,
-        borderColor:'#ededed',
-        marginLeft:15,
-        marginRight:15
-    },
-    leaveInfoMargin:{
-        marginTop:30
-    },
-    leaveInfo:{
-        marginLeft:30,
-        flexDirection:'row',
-        marginTop:5,
-        marginBottom:5
-    },
-    leaveInfoSign:{
-        color:'#8F9FB3'
-    },
-    leaveInfoContent:{
-        color:'#42436A',
-        marginLeft:10
-    },
     confirmButton:{
         width:'50%',
         alignSelf:'center',
         borderRadius:30,
         marginTop:30
-    }
+    },
+    leaveBorder:{
+        marginTop:20,
+        marginLeft:15,
+        marginRight:15,
+    },
 });
 
-// 孩子id和孩子的group id 对应关系组
-let childrenGroupMap = new Map();
 export default class Confirm extends Component{
 
     constructor(){
         super();
         this.state = {
-            childrenNames:[],
+            childrenName:'',
+            childrenGroupId:null
         }
     }
 
     // 显示请假信息
     _showExcuseInfo(){
-        let childrenNames = [];
-        const childrenIds = this.props.navigation.getParam('childrenIds');
-        
         for (const child of global.children) {
-            // 找出选中的孩子
-            if(childrenIds.indexOf(child._id) != -1){
-                childrenGroupMap.set(child._id,child._class._id);
-                childrenNames.push(child.firstName+' '+child.lastName);
+            
+            if(this.props.navigation.getParam('childrenId') == child._id){
+                this.setState({
+                    childrenName:child.firstName+' '+child.lastName,
+                    childrenGroupId:child._class._id
+                });
+                break;
             }
         }
-        this.setState({
-            childrenNames:childrenNames
-        });
     }
-
-    // 提交请假信息
-    _submitExcuse(){
-       const childrenIds = this.props.navigation.getParam('childrenIds');
-
-       for(const childId of childrenIds){
-           // 找到孩子id对应的group id
-           if(childrenGroupMap.get(childId) != undefined){
-                this._sendExcuse(childId,childrenGroupMap.get(childId));
-           }
-       }
-
-    }
-
 
     // 发送请假信息
-    async _sendExcuse(childId,groupId){
+    async _sendExcuse(){
+
+        const childrenId = this.props.navigation.getParam('childrenId');
 
         try {
-            let response = await fetch(host+'/grd/children/'+childId+'/absentee-notes', {
+            let response = await fetch(host+'/grd/children/'+childrenId+'/absentee-notes?fetchWhenSave=true', {
                 method: "POST",
                 headers: {
                     'X-App-Id': global.appId,
                     'X-Session-Token': global.token
                 },
                 body: JSON.stringify({
-                    user: childId,
-                    group: groupId,
+                    group: this.state.childrenGroupId,
                     absentFrom:this.props.navigation.getParam('startDate').toString(),
                     absentTo:this.props.navigation.getParam('endDate').toString(),
                     note:this.props.navigation.getParam('reasonText')
                 })
-            });
+            });  
 
-            console.log(response);
+            let data = JSON.parse(response._bodyInit);
 
-            // let data = JSON.parse(response._bodyInit);
+            if(response.status == 200){
+                this.props.navigation.navigate('AbsenteeNoteDetail',{
+                    childrenId:childrenId,
+                    absenteeId:data._id,
+                    childrenName:this.state.childrenName,
+                    startDate:this.props.navigation.getParam('startDate').toString(),
+                    endDate:this.props.navigation.getParam('endDate').toString(),
+                    reason:this.props.navigation.getParam('reasonText'),
+                    isPass:false
+                });
+            }else{
 
-            // if(response.status == 200){
-               
-                
-            // }
+            }
+            
         } catch (error) {
             console.error(error);
         }
@@ -156,7 +111,6 @@ export default class Confirm extends Component{
     componentWillMount(){
         this._showExcuseInfo();
     }
-
 
 
 
@@ -172,44 +126,25 @@ export default class Confirm extends Component{
                             </TouchableOpacity>
                         }
                         centerSection={
-                            <Text style={styles.topNavBarCenterText}>Preview Information</Text>
+                            <Text style={styles.topNavBarCenterText}>Preview</Text>
                         }
                     />
                 </View>
                 <View style={styles.containerBottom}>
-                    <View style={styles.leave}>
-                        <View style={styles.leaveTop}>
-                            <Text style={styles.excuseText}>Excuse</Text>
-                        </View>
-                        <View style={styles.cutLine}></View>    
-                        <View style={styles.leaveBottom}>
-                            <View style={styles.leaveInfoMargin}>
-                                <View style={styles.leaveInfo}>
-                                    <Text style={styles.leaveInfoSign}>Student:</Text>
-                                    <Text style={styles.leaveInfoContent}>{this.state.childrenNames.toString()}</Text>
-                                </View>
-                                <View style={styles.leaveInfo}>
-                                    <Text style={styles.leaveInfoSign}>Start Date:</Text>
-                                    <Text style={styles.leaveInfoContent}>{this.props.navigation.getParam('startDate').toString()}</Text>
-                                </View>
-                                <View style={styles.leaveInfo}>
-                                    <Text style={styles.leaveInfoSign}>End Date:</Text>
-                                    <Text style={styles.leaveInfoContent}>{this.props.navigation.getParam('endDate').toString()}</Text>
-                                </View>
-                                <View style={styles.leaveInfo}>
-                                    <Text style={styles.leaveInfoSign}>Reason:</Text>
-                                    <Text style={styles.leaveInfoContent}>{this.props.navigation.getParam('reasonText')}</Text>
-                                </View>
-                            </View>
-                        </View>
-
-                    </View> 
-
+                    <View style={styles.leaveBorder}>
+                        <Leave
+                            childrenName={this.state.childrenName}
+                            startDate={this.props.navigation.getParam('startDate').toString()}
+                            endDate={this.props.navigation.getParam('endDate').toString()}
+                            reason={this.props.navigation.getParam('reasonText')}
+                        />
+                    </View>    
+                   
                     
                     <Button
                         name='Confirm'
                         buttonStyle={styles.confirmButton}
-                        onPress={()=>this._submitExcuse()}
+                        onPress={()=>this._sendExcuse()}
                     />       
                 </View>
             </View>
