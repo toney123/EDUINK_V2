@@ -2,12 +2,13 @@
  * 主页
  */
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View,StatusBar,TouchableOpacity,Dimensions,Image} from 'react-native';
+import {Platform, StyleSheet, Text, View,StatusBar,TouchableOpacity,Dimensions,Image,FlatList} from 'react-native';
 import SideMenu from 'react-native-side-menu';
 import LeftDrawer from './left-drawer';
-import TopTabView from '../home/TopTab/top-tab-view';
 import TopNavBar from '../../component/top-nav-bar';
 import {host} from '../../util/constant';
+import InfoFlow from '../home/common/info-flow';
+import EduIcon from '../../component/icon/iconfont';
 
 const styles = StyleSheet.create({
     container:{
@@ -27,8 +28,33 @@ const styles = StyleSheet.create({
     topNavBarLeftIcon:{
         left:5,
         bottom:10,
-    },  
+    }, 
 });
+
+const contents = [
+    {
+        id:1,
+        type:'News',
+        title:'Help and inspire fellow designers by...',
+        icon:require('../../image/icon/list-news.png'),
+        pictures:[]
+    },
+    {   
+        id:2,
+        type:'Notice',
+        title:'Help and inspire fellow designers by...',
+        icon:require('../../image/icon/list-notice.png'),
+        pictures:[]
+    },
+    {
+        id:3,
+        type:'News',
+        title:'Help and inspire fellow designers by...',
+        icon:require('../../image/icon/list-news.png'),
+        pictures:[]
+    },
+];
+
 
 export default class Index extends Component{
 
@@ -53,6 +79,9 @@ export default class Index extends Component{
     }
     // 提供给子组件来更新父组件的state
     updateState(id,name){
+        // 更新全局
+        global.childrenId = id;
+
         this.setState({
             sideMenuStatus:!this.state.sideMenuStatus,
             currentChildId:id,
@@ -70,18 +99,21 @@ export default class Index extends Component{
     }
 
     // 获取家长的所有孩子
-    _getChildren(){
-        fetch(host+"/grd/children?populate=_class", {
-            method: "GET",
-            headers: {
-                'X-Session-Token':global.token,
-                'X-App-Id':global.appId
-            },
-        }).then(response => {
-            const data = JSON.parse(response._bodyText);
-            const responseStatus = response.status;
+    async _getChildren(){
+        try {
+            let response = await fetch(host+'/grd/children?populate=_class', {
+                method: "GET",
+                headers: {
+                    'X-App-Id': global.appId,
+                    'X-Session-Token': global.token
+                },
+            });
 
-            if(responseStatus == 200){
+            const data = JSON.parse(response._bodyText);
+
+            console.log(data);
+
+            if(response.status == 200){
 
                 global.children = data;
 
@@ -92,10 +124,12 @@ export default class Index extends Component{
             }else{
                 alert(data.message);
             }
-        })
-        .catch(error => {
-          alert(error);
-        });
+            
+        } catch (error) {
+            alert(error);
+        }
+
+
     }
 
 
@@ -138,10 +172,11 @@ export default class Index extends Component{
                         }
                     />
                     <View style={styles.labelBar}> 
-                        {/* 选项栏 */}
-                        <TopTabView 
-                            currentChildId = {this.state.currentChildId}
-                        />    
+                        {/* <EduIcon name='gold' style={{fontSize:24}} /> */}
+                        <InfoFlow
+                            contents={contents}
+                            type='news'
+                        />
                     </View>
                 </SideMenu>  
             </View>

@@ -6,6 +6,8 @@ import {Platform, StyleSheet, Text, View,AsyncStorage} from 'react-native';
 import Storage from 'react-native-storage';
 import {host} from '../util/constant';
 
+global.childrenId = 0;
+
 export default class Index extends Component{
 
     constructor(props){
@@ -79,14 +81,13 @@ export default class Index extends Component{
             },
         }).then(response => {
             const responseJson = JSON.parse(response._bodyText);
-            const responseStatus = response.status;
 
             // 更新全局变量
             global.appId = responseJson.appId;
             global.token = responseJson.sessionToken;
 
             let routeName;
-            if(responseStatus == 200){
+            if(response.status == 200){
                 global.token = responseJson.sessionToken;
                 routeName = 'Main';
             }else{

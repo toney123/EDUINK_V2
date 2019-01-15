@@ -45,7 +45,6 @@ export default class PictureWall extends Component{
 
     static propTypes = {
         items:PropTypes.arrayOf(PropTypes.object).isRequired,
-        updateParentPreviewContent:PropTypes.func.isRequired
     }
 
     constructor(props){
@@ -94,10 +93,6 @@ export default class PictureWall extends Component{
                 contentHeight = 440;
                 imageFlex = 10;
             }
-            // 第一参数：content 卡片最外边的高度，
-            // 第二参数：content 中间图片部分的比例,
-            // 通过修改父组件state，调整content的一些样式
-            this.props.updateParentPreviewContent(contentHeight,imageFlex);
         }
         return pictureStyles;
     }

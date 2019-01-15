@@ -103,16 +103,19 @@ export default class Index extends Component{
 
             if(response.status == 200){
                 this.setState({
-                    absentees:data,
-                    refreshing:false
+                    absentees:data
                 });
             }else{
 
             }
             
         } catch (error) {
-            console.error(error);
+            alert(error);
         }
+        
+        this.setState({
+            refreshing:false
+        });
     }
 
     
