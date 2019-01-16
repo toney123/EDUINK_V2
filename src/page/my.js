@@ -3,23 +3,12 @@
  */
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,Image,TouchableOpacity,FlatList} from 'react-native';
-import TopNavBar from '../component/top-nav-bar';
 import ListItem from '../component/list-item';
 import {host} from '../util/constant';
 
 const styles = StyleSheet.create({
     container:{
         flex:1,
-    },
-    containerTop:{
-        flex:1,
-    },
-    containerBottom:{
-        flex:12,
-    },
-    topNavBarCenterText:{
-        textAlign:'center',
-        fontSize:18
     },
     user:{
         flex:1,
@@ -106,34 +95,36 @@ export default class My extends Component{
     }
 
     // 获取当前帐号信息
-    _getAccountInfo(){
-        fetch(host+"/auth/me", {
-            method: "GET",
-            headers: {
-                'X-App-Id':global.appId,
-                'X-Session-Token':global.token
-            },
-            }).then(response => {
-                const responseJson = JSON.parse(response._bodyText);
-                const responseStatus = response.status;
-    
-                if(responseStatus == 200){
-                    this.setState({
-                        userName:responseJson.firstName+' '+responseJson.lastName,
-                        email:responseJson.email
-                    })
-                }else{
-                    alert(responseJson.message);
-                    // session token 过期
-                    if(responseJson.appCode == 'ERR_INVALID_SESSION_TOKEN'){
-                        // 跳转至登录页
-                        this.props.navigation.navigate(routeName);
-                    }
+    async _getAccountInfo(){
+
+        try {
+            const response = await fetch(host+"/auth/me", {
+                method: "GET",
+                headers: {
+                    'X-App-Id':global.appId,
+                    'X-Session-Token':global.token
                 }
-                
-            }).catch(error => {
-                alert(error);
             });
+
+            const responseJson = JSON.parse(response._bodyText);
+
+            if(response.status == 200){
+                this.setState({
+                    userName:responseJson.firstName+' '+responseJson.lastName,
+                    email:responseJson.email
+                })
+            }else{
+                alert(responseJson.message);
+                // session token 过期
+                if(responseJson.appCode == 'ERR_INVALID_SESSION_TOKEN'){
+                    // 跳转至登录页
+                    this.props.navigation.navigate(routeName);
+                }
+            }
+
+        } catch (error) {
+            alert(error);
+        }
     }
 
     componentWillMount(){
@@ -144,15 +135,7 @@ export default class My extends Component{
     render(){
         return(
             <View style={styles.container}>
-                <View style={styles.containerTop}>
-                    <TopNavBar 
-                        centerSection={
-                            <Text style={styles.topNavBarCenterText}>More</Text>
-                        }
-                    />
-                </View>
-                <View style={styles.containerBottom}>
-                    <View style={styles.user}>
+                <View style={styles.user}>
                         <View style={styles.userTop}></View>
                         <View style={styles.userCenter}>
                             <View style={styles.userAvatar}>
@@ -185,7 +168,6 @@ export default class My extends Component{
                         </View>
                         <View style={styles.systemItemsBottom}></View>
                     </View>
-                </View>
             </View>
         );
     }

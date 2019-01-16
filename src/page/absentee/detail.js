@@ -112,7 +112,7 @@ export default class Detail extends Component{
         const absenteeId = this.props.navigation.getParam('absenteeId');
 
         try {
-            let response = await fetch(host+'/grd/children/'+childrenId+'/absentee-notes/'+absenteeId, {
+            const response = await fetch(host+'/grd/children/'+childrenId+'/absentee-notes/'+absenteeId, {
                 method: "DELETE",
                 headers: {
                     'X-App-Id': global.appId,

@@ -72,7 +72,7 @@ export default class Confirm extends Component{
         const childrenId = this.props.navigation.getParam('childrenId');
 
         try {
-            let response = await fetch(host+'/grd/children/'+childrenId+'/absentee-notes?fetchWhenSave=true', {
+            const response = await fetch(host+'/grd/children/'+childrenId+'/absentee-notes?fetchWhenSave=true', {
                 method: "POST",
                 headers: {
                     'X-App-Id': global.appId,

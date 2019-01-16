@@ -84,7 +84,7 @@ export default class ForgetPassword extends Component{
     }
 
     // 发送重置密码的邮件
-    _sendResetPasswordEmail(){
+   async  _sendResetPasswordEmail(){
         if(this.state.xAppId == ''){
             alert('School ID can not be empty');
             return false;
@@ -93,35 +93,34 @@ export default class ForgetPassword extends Component{
             alert('Email can not be empty');
             return false;
         }
-        
 
-        fetch(host+"/auth/request-password-reset", {
-        method: "POST",
-        headers: {
-            'X-App-Id':this.state.xAppId
-        },
-        body: JSON.stringify({
-                email:this.state.email,
-            })
-        })
-        .then(response => {
-        
+
+        try {
+            const response = await fetch(host+"/auth/request-password-reset", {
+                method: "POST",
+                headers: {
+                    'X-App-Id':this.state.xAppId
+                },
+                body: JSON.stringify({
+                        email:this.state.email,
+                    })
+                });
+
             if(response.status == 204){
                 alert('Sending mailbox successfully');
                 // 跳转至登录页
                 this.props.navigation.navigate('Login');
             }else{
                 if(response._bodyText != ''){
-                    const responseJson = JSON.parse(response._bodyText);
-                    alert(responseJson.message);
+                    alert(JSON.parse(response._bodyText).message);
                 }
                 
             }
-            
-        })
-        .catch(error => {
-          alert(error);
-        });
+
+        } catch (error) {
+            alert(error);
+        }
+        
     }
 
     _switchLoginPage(){

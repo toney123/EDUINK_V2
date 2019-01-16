@@ -108,6 +108,31 @@ export default class LeftDrawer extends Component{
 
         let children=[];
         if(this.props.children.length){
+
+            children.unshift(
+                <TouchableOpacity key={0} onPress={()=>{this.props.updateState('all','All Children')}}>
+                        <View style={styles.person}>
+                            <View style={styles.personLeft}>
+                                <View style={styles.avatar}>
+                                    <Text style={styles.avatarText}></Text>
+                                </View>
+                            </View>
+                            <View style={styles.personCenter}>
+                                <View style={styles.studentTop}>
+                                    <Text style={styles.studentName}>All Children</Text>
+                                </View>
+                                <View style={styles.studentBottom}>
+                                    <Text style={styles.studentClassName}></Text>
+                                </View>
+                            </View>
+                            <View style={styles.personRight}>
+                                <View style={styles.clickPerson}></View>
+                            </View>
+                        </View>
+                    </TouchableOpacity>
+            );
+
+
             for (const child of this.props.children) {
 
                 const childName = child.firstName+' '+child.lastName;
@@ -135,28 +160,6 @@ export default class LeftDrawer extends Component{
                     </TouchableOpacity>
                 );
             }
-            children.unshift(
-                <TouchableOpacity key={0} onPress={()=>{this.props.updateState(0,'All Children')}}>
-                        <View style={styles.person}>
-                            <View style={styles.personLeft}>
-                                <View style={styles.avatar}>
-                                    <Text style={styles.avatarText}></Text>
-                                </View>
-                            </View>
-                            <View style={styles.personCenter}>
-                                <View style={styles.studentTop}>
-                                    <Text style={styles.studentName}>All Children</Text>
-                                </View>
-                                <View style={styles.studentBottom}>
-                                    <Text style={styles.studentClassName}></Text>
-                                </View>
-                            </View>
-                            <View style={styles.personRight}>
-                                <View style={styles.clickPerson}></View>
-                            </View>
-                        </View>
-                    </TouchableOpacity>
-            );
             
         }
 

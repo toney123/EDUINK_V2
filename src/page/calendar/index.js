@@ -13,16 +13,6 @@ const styles = StyleSheet.create({
         flex:1,
         backgroundColor:'#F6F9FF'
     },
-    containerTop:{
-        flex:1,
-    },
-    containerBottom:{
-        flex:12
-    },
-    topNavBarCenterText:{
-        textAlign:'center',
-        fontSize:18
-    },
     selectType:{
         flex:1,
         backgroundColor:'#FFF',
@@ -202,28 +192,19 @@ export default class Index extends Component{
 
         return(
             <View style={styles.container}>
-                <View style={styles.containerTop}>
-                    <TopNavBar 
-                        centerSection={
-                            <Text style={styles.topNavBarCenterText}>Calendar</Text>
-                        }
-                    />
+                <View style={styles.selectType}>
+                    <View style={styles.selectTypeButton}>
+                        <TouchableOpacity style={[styles.monthTypeTouch,monthTypeTouchStyle]} onPress={()=>this._switchSelectType('Month')}>
+                            <Text style={[styles.monthTypeTouchText,monthTypeTouchTextStyle]}>Month</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={[styles.listTypeTouch,listTypeTouchStyle]} onPress={()=>this._switchSelectType('List')}>
+                            <Text style={[styles.listTypeTouchText,listTypeTouchTextStyle]}>List</Text>
+                        </TouchableOpacity>
+                    </View>
+                    
                 </View>
-                <View style={styles.containerBottom}>
-                    <View style={styles.selectType}>
-                        <View style={styles.selectTypeButton}>
-                            <TouchableOpacity style={[styles.monthTypeTouch,monthTypeTouchStyle]} onPress={()=>this._switchSelectType('Month')}>
-                                <Text style={[styles.monthTypeTouchText,monthTypeTouchTextStyle]}>Month</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={[styles.listTypeTouch,listTypeTouchStyle]} onPress={()=>this._switchSelectType('List')}>
-                                <Text style={[styles.listTypeTouchText,listTypeTouchTextStyle]}>List</Text>
-                            </TouchableOpacity>
-                        </View>
-                        
-                    </View>
-                    <View style={styles.typeContent}>
-                        {typeContent}
-                    </View>
+                <View style={styles.typeContent}>
+                    {typeContent}
                 </View>
             </View>
         );

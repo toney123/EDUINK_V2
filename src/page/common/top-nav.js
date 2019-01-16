@@ -1,5 +1,5 @@
 /**
- * 主页
+ * 全局顶部导航
  */
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,StatusBar,TouchableOpacity,Dimensions,Image,FlatList} from 'react-native';
@@ -7,8 +7,10 @@ import SideMenu from 'react-native-side-menu';
 import LeftDrawer from './left-drawer';
 import TopNavBar from '../../component/top-nav-bar';
 import {host} from '../../util/constant';
-import InfoFlow from '../home/common/info-flow';
-import EduIcon from '../../component/icon/iconfont';
+import InfoFlow from './info-flow';
+import Calendars from '../calendar/index';
+import Absentee from '../absentee/index';
+import My from '../my';
 
 const styles = StyleSheet.create({
     container:{
@@ -31,32 +33,8 @@ const styles = StyleSheet.create({
     }, 
 });
 
-const contents = [
-    {
-        id:1,
-        type:'News',
-        title:'Help and inspire fellow designers by...',
-        icon:require('../../image/icon/list-news.png'),
-        pictures:[]
-    },
-    {   
-        id:2,
-        type:'Notice',
-        title:'Help and inspire fellow designers by...',
-        icon:require('../../image/icon/list-notice.png'),
-        pictures:[]
-    },
-    {
-        id:3,
-        type:'News',
-        title:'Help and inspire fellow designers by...',
-        icon:require('../../image/icon/list-news.png'),
-        pictures:[]
-    },
-];
 
-
-export default class Index extends Component{
+export default class TopNav extends Component{
 
     constructor(props){
         super(props);
@@ -101,7 +79,7 @@ export default class Index extends Component{
     // 获取家长的所有孩子
     async _getChildren(){
         try {
-            let response = await fetch(host+'/grd/children?populate=_class', {
+            const response = await fetch(host+'/grd/children?populate=_class', {
                 method: "GET",
                 headers: {
                     'X-App-Id': global.appId,
@@ -109,20 +87,18 @@ export default class Index extends Component{
                 },
             });
 
-            const data = JSON.parse(response._bodyText);
-
-            console.log(data);
+            const responseJson = JSON.parse(response._bodyText);
 
             if(response.status == 200){
 
-                global.children = data;
+                global.children = responseJson;
 
                 this.setState({
-                    children:data
+                    children:responseJson
                 });
 
             }else{
-                alert(data.message);
+                alert(responseJson.message);
             }
             
         } catch (error) {
@@ -144,6 +120,45 @@ export default class Index extends Component{
 
 
     render(){
+
+        let content;
+
+        switch (this.props.contentType) {
+            case 'News':
+                content = (
+                    <InfoFlow
+                        type='news'
+                        navigation = {this.props.navigation}
+                    />
+                );
+                break;
+            case 'Notices':
+                content = (
+                    <InfoFlow
+                        type='notices'
+                        navigation = {this.props.navigation}
+                    />
+                );
+                break;    
+            case 'Calendars':
+                content = (
+                    <Calendars/>
+                );
+                break;  
+            case 'Absence notes':
+                content = (
+                    <Absentee
+                        navigation = {this.props.navigation}
+                    />
+                );
+                break;  
+            case 'My':
+                content = (
+                    <My
+                        navigation = {this.props.navigation}
+                    />
+                );
+        }
 
 
         return(
@@ -168,15 +183,11 @@ export default class Index extends Component{
                             </TouchableOpacity>
                         }
                         centerSection={
-                            <Text style={styles.topNavBarCenterText}>{this.state.currentChildName}</Text>
+                            <Text style={styles.topNavBarCenterText}>{this.props.contentType}</Text>
                         }
                     />
                     <View style={styles.labelBar}> 
-                        {/* <EduIcon name='gold' style={{fontSize:24}} /> */}
-                        <InfoFlow
-                            contents={contents}
-                            type='news'
-                        />
+                        {content}
                     </View>
                 </SideMenu>  
             </View>

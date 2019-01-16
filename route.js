@@ -5,7 +5,7 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,AsyncStorage} from 'react-native';
 import {createStackNavigator,createAppContainer,createSwitchNavigator } from 'react-navigation';
 import Index from './src/page/index';
-import BottomTabBar from './src/page/bottom-tab-bar';
+import BottomTabBar from './src/page/common/bottom-tab-bar';
 import Login from './src/page/login';
 import ForgetPassword from './src/page/forget-password';
 import OneSignal from 'react-native-onesignal';
@@ -14,6 +14,7 @@ import CalendarDetail from './src/page/calendar/detail';
 import CreateAbsenteeNote from './src/page/absentee/create';
 import ConfirmAbsenteeNote from './src/page/absentee/confirm';
 import AbsenteeNoteDetail from './src/page/absentee/detail';
+import NewsDetail from './src/page/news/detail';
 
 
 // StackNavigator，允许返回
@@ -24,6 +25,7 @@ const MainStack = createStackNavigator({
   CreateAbsenteeNote:{screen:CreateAbsenteeNote},
   ConfirmAbsenteeNote:{screen:ConfirmAbsenteeNote},
   AbsenteeNoteDetail:{screen:AbsenteeNoteDetail},
+  NewsDetail:{screen:NewsDetail}
 },{
   initialRouteName:'Main',
   defaultNavigationOptions:{

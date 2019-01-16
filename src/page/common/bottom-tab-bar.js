@@ -4,13 +4,9 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View,Image} from 'react-native';
 import TabNavigator from 'react-native-tab-navigator';
-import Home from './home/index';
-import Calendar from './calendar/index';
-import Absentee from './absentee/index';
-import Notice from './notice';
-import More from './my';
+import TopNav from './top-nav';
 
-const iconUri = '../image/icon/';
+const iconUri = '../../image/icon/';
 
 const styles = StyleSheet.create({
     container:{
@@ -57,7 +53,10 @@ export default class BottomTabBar extends Component{
                         renderIcon={() => <Image style={{width:25,height:25}} source={require(iconUri+'home.png')} />}
                         renderSelectedIcon={() => <Image style={{width:25,height:25}} source={require(iconUri+'home-selected.png')} />}
                         onPress={() => this.setState({ selectedTab: 'Home' })}>
-                        <Home />
+                        <TopNav 
+                            contentType='News'
+                            navigation = {this.props.navigation}
+                        />
                     </TabNavigator.Item>
                     {/* 通告页 */}
                     <TabNavigator.Item
@@ -65,7 +64,10 @@ export default class BottomTabBar extends Component{
                         renderIcon={() => <Image style={{width:25,height:25}} source={require(iconUri+'notice.png')} />}
                         renderSelectedIcon={() => <Image style={{width:25,height:25}} source={require(iconUri+'notice-selected.png')} />}
                         onPress={() => this.setState({ selectedTab: 'Notice' })}>
-                        <Notice/>
+                        <TopNav 
+                            contentType='Notices'
+                            navigation = {this.props.navigation}
+                        />
                     </TabNavigator.Item>
                     {/* 日历页 */}
                     <TabNavigator.Item
@@ -73,7 +75,10 @@ export default class BottomTabBar extends Component{
                         renderIcon={() => <Image style={{width:24,height:25}} source={require(iconUri+'calendar.png')} />}
                         renderSelectedIcon={() => <Image style={{width:24,height:25}} source={require(iconUri+'calendar-selected.png')} />}
                         onPress={() => this.setState({ selectedTab: 'Calendar' })}>
-                        <Calendar/>
+                         <TopNav 
+                            contentType='Calendars'
+                            navigation = {this.props.navigation}
+                        />
                     </TabNavigator.Item>
                      {/* 请假页 */}
                      <TabNavigator.Item
@@ -81,7 +86,8 @@ export default class BottomTabBar extends Component{
                         renderIcon={() => <Image style={{width:25,height:25}} source={require(iconUri+'absentee.png')} />}
                         renderSelectedIcon={() => <Image style={{width:25,height:25}} source={require(iconUri+'absentee-selected.png')} />}
                         onPress={() => this.setState({ selectedTab: 'Absentee' })}>
-                        <Absentee
+                        <TopNav
+                            contentType='Absence notes'
                             navigation = {this.props.navigation}
                         />
                     </TabNavigator.Item>
@@ -91,7 +97,8 @@ export default class BottomTabBar extends Component{
                         renderIcon={() => <Image style={{width:25,height:25}} source={require(iconUri+'my.png')} />}
                         renderSelectedIcon={() => <Image style={{width:25,height:25}} source={require(iconUri+'my-selected.png')} />}
                         onPress={() => this.setState({ selectedTab: 'My' })}>
-                        <More
+                        <TopNav
+                            contentType='My'
                             navigation = {this.props.navigation}
                         />
                     </TabNavigator.Item>

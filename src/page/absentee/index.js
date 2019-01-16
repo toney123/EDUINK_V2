@@ -14,18 +14,8 @@ const styles = StyleSheet.create({
     container:{
         flex:1
     },
-    containerTop:{
-        flex:1
-    },
-    containerBottom:{
-        flex:12
-    },
     scrollAbsentee:{
         flex:1
-    },
-    topNavBarCenterText:{
-        textAlign:'center',
-        fontSize:18
     },
     absenteeSpace:{
         marginTop:20
@@ -91,7 +81,7 @@ export default class Index extends Component{
         });
 
         try {
-            let response = await fetch(host+'/grd/children/all/absentee-notes?populate=user', {
+            const response = await fetch(host+'/grd/children/all/absentee-notes?populate=user', {
                 method: "GET",
                 headers: {
                     'X-App-Id': global.appId,
@@ -189,15 +179,7 @@ export default class Index extends Component{
 
         return(
             <View style={styles.container}>
-                <View style={styles.containerTop}>
-                    <TopNavBar 
-                        centerSection={
-                            <Text style={styles.topNavBarCenterText}>Absentee Note</Text>
-                        }
-                    />
-                </View>
-                <View style={styles.containerBottom}>
-                    <ScrollView 
+                <ScrollView 
                         style={styles.scrollAbsentee}
                         refreshControl={
                             <RefreshControl
@@ -206,17 +188,16 @@ export default class Index extends Component{
                             />
                         }
                     >
-                        <View style={styles.absenteeSpace}>
-                            {absentees.map((value,index)=>value)}
-                        </View>
-                            
-                    </ScrollView>    
-
-                    <ActionButton 
-                        buttonColor='#597EF7'
-                        onPress={()=>this.props.navigation.navigate('CreateAbsenteeNote')} 
-                    />
+                <View style={styles.absenteeSpace}>
+                    {absentees.map((value,index)=>value)}
                 </View>
+                            
+                </ScrollView>    
+
+                <ActionButton 
+                    buttonColor='#597EF7'
+                    onPress={()=>this.props.navigation.navigate('CreateAbsenteeNote')} 
+                />
             </View>
         );
     }

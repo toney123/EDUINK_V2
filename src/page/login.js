@@ -86,7 +86,7 @@ export default class Login extends Component{
         }
     }
 
-    _login(){
+    async _login(){
         const {xAppId,account,password} = this.state;
 
         if(xAppId == ''){
@@ -101,46 +101,47 @@ export default class Login extends Component{
             alert('Password can not be empty');
             return false;
         }
-        
 
-        fetch(host+"/auth/session", {
-        method: "POST",
-        headers: {
-            'X-App-Id':xAppId
-        },
-        body: JSON.stringify({
-                login: account,
-                password: password,
-                clientType:'mobile'
-            })
-        })
-        .then(response => {
-            let responseJson = JSON.parse(response._bodyText);
-            let responseStatus = response.status;
-            
-            if(responseStatus == 200){
-                // 存储登录信息
-                global.storage.save({
-                    key: 'loginStatus', 
-                    data: { 
-                        token:responseJson.sessionToken,
-                        appId:responseJson.appId
-                    },
+
+        try {
+            const response = await fetch(host+"/auth/session", {
+                method: "POST",
+                headers: {
+                    'X-App-Id':xAppId
+                },
+                body: JSON.stringify({
+                        login: account,
+                        password: password,
+                        clientType:'mobile'
+                    })
                 });
-                // 更新全局变量
-                global.appId = responseJson.appId;
-                global.token = responseJson.sessionToken;
 
-                // 跳转至主页
-                this.props.navigation.navigate('Main');
-            }else{
-                alert(responseJson.message);
-            }
-            
-        })
-        .catch(error => {
-          alert(error);
-        });
+                const responseJson = JSON.parse(response._bodyText);
+
+                if(response.status == 200){
+                    // 存储登录信息
+                    global.storage.save({
+                        key: 'loginStatus', 
+                        data: { 
+                            token:responseJson.sessionToken,
+                            appId:responseJson.appId
+                        },
+                    });
+                    // 更新全局变量
+                    global.appId = responseJson.appId;
+                    global.token = responseJson.sessionToken;
+    
+                    // 跳转至主页
+                    this.props.navigation.navigate('Main');
+                }else{
+                    alert(responseJson.message);
+                }
+   
+
+        } catch (error) {
+            alert(error);
+        }
+        
     }
 
     _switchForgetPasswordPage(){

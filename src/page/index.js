@@ -6,7 +6,7 @@ import {Platform, StyleSheet, Text, View,AsyncStorage} from 'react-native';
 import Storage from 'react-native-storage';
 import {host} from '../util/constant';
 
-global.childrenId = 0;
+global.childrenId = 'all';
 
 export default class Index extends Component{
 
@@ -72,14 +72,17 @@ export default class Index extends Component{
         });
     }
     // 检查token是否已过期
-    _checkTokenDeadline(token,appId){
-        fetch(host+"/auth/session", {
-            method: "GET",
-            headers: {
-                'X-Session-Token':token,
-                'X-App-Id':appId
-            },
-        }).then(response => {
+    async _checkTokenDeadline(token,appId){
+
+        try {
+            const response = await fetch(host+"/auth/session", {
+                method: "GET",
+                headers: {
+                    'X-Session-Token':token,
+                    'X-App-Id':appId
+                },
+            });
+
             const responseJson = JSON.parse(response._bodyText);
 
             // 更新全局变量
@@ -96,10 +99,12 @@ export default class Index extends Component{
             }
             // 根据返回提示，如成功跳转至主页，否则跳转至登录页
             this.props.navigation.navigate(routeName);
-        })
-        .catch(error => {
-          alert(error);
-        });
+
+
+        } catch (error) {
+            alert(error);
+        }
+
     }
 
 
