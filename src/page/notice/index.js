@@ -82,7 +82,9 @@ export default class Notice extends Component{
         }
     }
 
-    async _getNotices(){
+    // 发送获取notices 请求
+    async _sendGetNotices(){
+
         try {
             const response = await fetch(host+'/grd/children/'+global.childrenId+'/notices', {
                 method: "GET",
@@ -92,30 +94,33 @@ export default class Notice extends Component{
                 },
             });
 
-            console.log(response);
-
-            const responseJson = JSON.parse(response._bodyInit);
+            const isResponse = response._bodyText != '' ? true : false;
 
             if(response.status == 200){
 
+                if(isResponse){
+                    
+                }
         
-                
             }else{
-
+                if(isResponse){
+                    alert(JSON.parse(response._bodyText).message);
+                }
             }
             
         } catch (error) {
             alert(error);
         }
-
+      
     }
 
-    async _onRefresh(){
+    // 执行获取notices
+    async _getNotices(){
         this.setState({
             loading:true
         });
 
-        await this._getNotices();
+        await this._sendGetNotices();
 
         this.setState({
             loading:false
@@ -123,7 +128,7 @@ export default class Notice extends Component{
     }
 
     componentWillMount(){
-        this._onRefresh();
+        this._getNotices();
     }
 
 
@@ -133,7 +138,7 @@ export default class Notice extends Component{
             <FlatList
                 data={this.state.notices}
                 refreshing={this.state.loading}
-                onRefresh={()=>this._onRefresh()}
+                onRefresh={()=>this._getNotices()}
                 ListEmptyComponent={()=>{
                     return(
                         <View style={{flex:1,alignItems:'center',marginTop:10}}>

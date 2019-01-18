@@ -14,9 +14,7 @@ export default class Index extends Component{
         super(props);
 
         this._initStorge();
-        // this._deleteStorge();
         this._loadStorge();
-
     }
 
     // 初始化存储设置
@@ -64,13 +62,6 @@ export default class Index extends Component{
         });
     }
 
-    // 删除存储信息
-    _deleteStorge(){
-        // 删除单个数据
-        global.storage.remove({
-        	key: 'loginStatus'
-        });
-    }
     // 检查token是否已过期
     async _checkTokenDeadline(token,appId){
 

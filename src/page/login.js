@@ -2,7 +2,7 @@
  * 登录页
  */
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View,Image,TextInput,KeyboardAvoidingView} from 'react-native';
+import {Platform, StyleSheet, Text, View,Image,TextInput,KeyboardAvoidingView,StatusBar} from 'react-native';
 import Button from '../component/button';
 import PressText from '../component/press-text';
 import {host} from '../util/constant';
@@ -11,6 +11,7 @@ import Loading from '../component/loading';
 const styles = StyleSheet.create({
     container:{
         flex:1,
+        backgroundColor:'#FFF'
     },
     containerTop:{
         flex:1,
@@ -88,36 +89,10 @@ export default class Login extends Component{
         }
     }
 
-    async _login(){
+    // 发送登录请求
+    async _sendLogin(xAppId,account,password){
 
-        this.setState({
-            loading:true
-        });
-
-        const {xAppId,account,password} = this.state;
-
-        if(xAppId == ''){
-            alert('School ID can not be empty');
-            this.setState({
-                loading:false
-            });
-            return false;
-        }
-        if(account == ''){
-            alert('Account can not be empty');
-            this.setState({
-                loading:false
-            });
-            return false;
-        }
-        if(password == ''){
-            alert('Password can not be empty');
-            this.setState({
-                loading:false
-            });
-            return false;
-        }
-
+        let result = false;
 
         try {
             const response = await fetch(host+"/auth/session", {
@@ -132,56 +107,97 @@ export default class Login extends Component{
                     })
                 });
 
-                console.log(response);
-
-                const responseJson = JSON.parse(response._bodyText);
+                const isResponse = response._bodyText !='' ? true:false;
 
                 if(response.status == 200){
-                    // 存储登录信息
-                    global.storage.save({
-                        key: 'loginStatus', 
-                        data: { 
-                            token:responseJson.sessionToken,
-                            appId:responseJson.appId
-                        },
-                    });
-                    // 更新全局变量
-                    global.appId = responseJson.appId;
-                    global.token = responseJson.sessionToken;
 
-                    this.setState({
-                        loading:false
-                    });
-    
-                    // 跳转至主页
-                    this.props.navigation.navigate('Main');
+                    if(isResponse){
+
+                        const responseJson = JSON.parse(response._bodyText);
+
+                        // 存储登录信息
+                        global.storage.save({
+                            key: 'loginStatus', 
+                            data: { 
+                                token:responseJson.sessionToken,
+                                appId:responseJson.appId
+                            },
+                        });
+                        // 更新全局变量
+                        global.appId = responseJson.appId;
+                        global.token = responseJson.sessionToken;
+
+                        result = true;
+                    }
                 }else{
-                    this.setState({
-                        loading:false
-                    });
-                    alert(responseJson.message);
+                    if(isResponse){
+                        alert(JSON.parse(response._bodyText).message);
+                    }
                 }
-   
 
         } catch (error) {
-            this.setState({
-                loading:false
-            });
             alert(error);
         }
 
-
-        
+        return result;
     }
 
-    _switchForgetPasswordPage(){
-        // 跳转至忘记密码页面
-        this.props.navigation.navigate('ForgetPassword');
+    // 执行登录
+    async _login(){
+        this.setState({
+            loading:true
+        });
+
+        const {xAppId,account,password} = this.state;
+
+        if(xAppId == ''){
+            alert('School ID can not be empty');
+            this.setState({
+                loading:false
+            });
+            return;
+        }
+        if(account == ''){
+            alert('Account can not be empty');
+            this.setState({
+                loading:false
+            });
+            return;
+        }
+        if(password == ''){
+            alert('Password can not be empty');
+            this.setState({
+                loading:false
+            });
+            return;
+        }
+
+        // 执行成功
+        if(await this._sendLogin(xAppId,account,password)){
+            this.setState({
+                loading:false
+            });
+
+            // 跳转至主页
+            this.props.navigation.navigate('Main');
+        }else{
+            this.setState({
+                loading:false
+            });
+        }
+
     }
+
 
     render(){
         return(
             <KeyboardAvoidingView style={styles.container} behavior='padding'>
+                {/* 状态栏 */}
+                <StatusBar
+                    barStyle='dark-content' 
+                    backgroundColor='#FFF'
+                    animated={true}
+                />
                 <View style={styles.containerTop}>
                     <View style={styles.imageTop}></View>
                     <View style={styles.imageCenter}>
@@ -218,7 +234,7 @@ export default class Login extends Component{
                                     />
                                     <PressText 
                                         name='I FORGET MY PASSWORD'
-                                        onPress={()=>this._switchForgetPasswordPage()}
+                                        onPress={()=>this.props.navigation.navigate('ForgetPassword')}
                                     />   
                                 </View>
                                 <View style={styles.formInputRight}></View>

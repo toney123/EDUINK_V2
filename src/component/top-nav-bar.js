@@ -10,14 +10,13 @@ const styles = StyleSheet.create({
     navigationBarIn:{
         flex:1,
         flexDirection:'row',
-        top:10,
+        alignItems:'center'
     },
     navigationLeft:{
         flex:1,
-        top:3,
     },
     navigationCenter:{
-        flex:2,
+        flex:1,
     },
     navigationRight:{
         flex:1,

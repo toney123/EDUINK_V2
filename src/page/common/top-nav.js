@@ -11,7 +11,9 @@ import News from '../news/index';
 import Notice from '../notice/index';
 import Calendars from '../calendar/index';
 import Absentee from '../absentee/index';
-import My from '../my';
+import My from '../my/index';
+
+const imageUri = '../../image/';
 
 const styles = StyleSheet.create({
     container:{
@@ -28,10 +30,19 @@ const styles = StyleSheet.create({
         textAlign:'center',
         fontSize:18
     },
-    topNavBarLeftIcon:{
-        left:5,
-        bottom:10,
+    topNavBarLeftTouchMenuIcon:{
+        marginLeft:5,
     }, 
+    topNavBarLeft:{
+        flex:1,
+        flexDirection:'row',
+        alignItems:'center'
+    },
+    topNavBarLeftAvatarIcon:{
+        width:25,
+        height:25,
+        borderRadius:25
+    }
 });
 
 
@@ -151,7 +162,7 @@ export default class TopNav extends Component{
                     />
                 );
                 break;  
-            case 'My':
+            case 'My account':
                 content = (
                     <My
                         navigation = {this.props.navigation}
@@ -177,9 +188,12 @@ export default class TopNav extends Component{
                     <TopNavBar
                         sytle={styles.TopNavBar} 
                         leftSection={
-                            <TouchableOpacity style={styles.topNavBarLeftIcon} onPress={this._updateLeftBarStatus}>
-                                <Image style={{width:40,height:40}} source={require('../../image/icon/list.png')} />
-                            </TouchableOpacity>
+                            <View style={styles.topNavBarLeft}>
+                                <TouchableOpacity style={styles.topNavBarLeftTouchMenuIcon} onPress={this._updateLeftBarStatus}>
+                                    <Image style={{width:40,height:40}} source={require('../../image/icon/list.png')} />
+                                </TouchableOpacity>
+                                <Image style={styles.topNavBarLeftAvatarIcon} source={require(imageUri+'avatar-default.jpg')} />
+                            </View>
                         }
                         centerSection={
                             <Text style={styles.topNavBarCenterText}>{this.props.contentType}</Text>

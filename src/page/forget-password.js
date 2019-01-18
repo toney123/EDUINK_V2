@@ -2,14 +2,16 @@
  * 重置密码
  */
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View,TextInput,TouchableOpacity,KeyboardAvoidingView} from 'react-native';
+import {Platform, StyleSheet, Text, View,TextInput,TouchableOpacity,KeyboardAvoidingView,StatusBar} from 'react-native';
 import Button from '../component/button';
 import PressText from '../component/press-text';
 import {host} from '../util/constant';
+import Loading from '../component/loading';
 
 const styles = StyleSheet.create({
     container:{
         flex:1,
+        backgroundColor:'#FFF'
     },
     containerTop:{
         flex:1,
@@ -79,39 +81,35 @@ export default class ForgetPassword extends Component{
         super(props);
         this.state = {
             xAppId:'',
-            email:''
+            email:'',
+            loading:false
         }
     }
 
     // 发送重置密码的邮件
-   async  _sendResetPasswordEmail(){
-        if(this.state.xAppId == ''){
-            alert('School ID can not be empty');
-            return false;
-        }
-        if(this.state.email == ''){
-            alert('Email can not be empty');
-            return false;
-        }
-
+   async _sendResetPassword(xAppId,email){
+        
+        let result = false;
 
         try {
             const response = await fetch(host+"/auth/request-password-reset", {
                 method: "POST",
                 headers: {
-                    'X-App-Id':this.state.xAppId
+                    'X-App-Id':xAppId
                 },
                 body: JSON.stringify({
-                        email:this.state.email,
+                        email:email,
                     })
-                });
+            });
 
+            const isResponse = response._bodyText != '' ? true : false;
+   
             if(response.status == 204){
                 alert('Sending mailbox successfully');
-                // 跳转至登录页
-                this.props.navigation.navigate('Login');
+                result = true;
             }else{
-                if(response._bodyText != ''){
+
+                if(isResponse){
                     alert(JSON.parse(response._bodyText).message);
                 }
                 
@@ -121,17 +119,57 @@ export default class ForgetPassword extends Component{
             alert(error);
         }
         
+        return result;
     }
 
-    _switchLoginPage(){
-        // 跳转至登录页
-        this.props.navigation.navigate('Login');
-    }
+    // 执行重置密码
+   async _resetPassword(){
+        this.setState({
+            loading:true
+        });
+
+        const {xAppId,email} = this.state;
+
+        if(xAppId == ''){
+            this.setState({
+                loading:false
+            });
+            alert('School ID can not be empty');
+            return;
+        }
+        if(email == ''){
+            this.setState({
+                loading:false
+            });
+            alert('Email can not be empty');
+            return;
+        }
+
+        if(await this._sendResetPassword(xAppId,email)){
+            this.setState({
+                loading:false
+            });
+            // 跳转至登录页
+            this.props.navigation.navigate('Login');
+        }else{
+            this.setState({
+                loading:false
+            });
+        }
+
+   } 
+
 
 
     render(){
         return(
             <KeyboardAvoidingView style={styles.container} behavior='padding'>
+                {/* 状态栏 */}
+                <StatusBar
+                    barStyle='dark-content' 
+                    backgroundColor='#FFF'
+                    animated={true}
+                />
                 <View style={styles.containerTop}>
                     <View style={styles.titleLeft}></View>
                     <View style={styles.titleCenter}>
@@ -155,12 +193,15 @@ export default class ForgetPassword extends Component{
                                 </View>
                                 <Button
                                     name='SEND EMAIL'
-                                    onPress={()=>this._sendResetPasswordEmail()}
+                                    onPress={()=>this._resetPassword()}
                                 /> 
                                 <PressText
                                     name='BACK TO LOGIN'
-                                    onPress={()=>this._switchLoginPage()}
+                                    onPress={()=>this.props.navigation.navigate('Login')}
                                 /> 
+                                <Loading
+                                    isLoad={this.state.loading}
+                                />
                             </View>
                             <View style={styles.formInputRight}></View>
                         </View>

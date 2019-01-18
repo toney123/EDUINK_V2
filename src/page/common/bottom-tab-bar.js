@@ -98,7 +98,7 @@ export default class BottomTabBar extends Component{
                         renderSelectedIcon={() => <Image style={{width:25,height:25}} source={require(iconUri+'my-selected.png')} />}
                         onPress={() => this.setState({ selectedTab: 'My' })}>
                         <TopNav
-                            contentType='My'
+                            contentType='My account'
                             navigation = {this.props.navigation}
                         />
                     </TabNavigator.Item>
