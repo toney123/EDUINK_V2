@@ -15,6 +15,7 @@ import CreateAbsenteeNote from './src/page/absentee/create';
 import ConfirmAbsenteeNote from './src/page/absentee/confirm';
 import AbsenteeNoteDetail from './src/page/absentee/detail';
 import NewsDetail from './src/page/news/detail';
+import NoticeDetail from './src/page/notice/detail';
 
 
 // StackNavigator，允许返回
@@ -25,9 +26,11 @@ const MainStack = createStackNavigator({
   CreateAbsenteeNote:{screen:CreateAbsenteeNote},
   ConfirmAbsenteeNote:{screen:ConfirmAbsenteeNote},
   AbsenteeNoteDetail:{screen:AbsenteeNoteDetail},
-  NewsDetail:{screen:NewsDetail}
+  NewsDetail:{screen:NewsDetail},
+  NoticeDetail:{screen:NoticeDetail}
 },{
-  initialRouteName:'Main',
+  // initialRouteName:'Main',
+  initialRouteName:'NoticeDetail',
   defaultNavigationOptions:{
     header:null
   }

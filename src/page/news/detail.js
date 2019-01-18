@@ -63,7 +63,7 @@ export default class Detail extends Component{
     render(){
 
 
-        const news = this.props.navigation.getParam('data');
+        const news = this.props.navigation.getParam('news');
 
 
         return(

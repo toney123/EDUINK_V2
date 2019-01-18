@@ -6,6 +6,7 @@ import {Platform, StyleSheet, Text, View,Image,TextInput,KeyboardAvoidingView} f
 import Button from '../component/button';
 import PressText from '../component/press-text';
 import {host} from '../util/constant';
+import Loading from '../component/loading';
 
 const styles = StyleSheet.create({
     container:{
@@ -82,23 +83,38 @@ export default class Login extends Component{
         this.state = {
             xAppId:'',
             account:'',
-            password:''
+            password:'',
+            loading:false
         }
     }
 
     async _login(){
+
+        this.setState({
+            loading:true
+        });
+
         const {xAppId,account,password} = this.state;
 
         if(xAppId == ''){
             alert('School ID can not be empty');
+            this.setState({
+                loading:false
+            });
             return false;
         }
         if(account == ''){
             alert('Account can not be empty');
+            this.setState({
+                loading:false
+            });
             return false;
         }
         if(password == ''){
             alert('Password can not be empty');
+            this.setState({
+                loading:false
+            });
             return false;
         }
 
@@ -116,6 +132,8 @@ export default class Login extends Component{
                     })
                 });
 
+                console.log(response);
+
                 const responseJson = JSON.parse(response._bodyText);
 
                 if(response.status == 200){
@@ -130,17 +148,29 @@ export default class Login extends Component{
                     // 更新全局变量
                     global.appId = responseJson.appId;
                     global.token = responseJson.sessionToken;
+
+                    this.setState({
+                        loading:false
+                    });
     
                     // 跳转至主页
                     this.props.navigation.navigate('Main');
                 }else{
+                    this.setState({
+                        loading:false
+                    });
                     alert(responseJson.message);
                 }
    
 
         } catch (error) {
+            this.setState({
+                loading:false
+            });
             alert(error);
         }
+
+
         
     }
 
@@ -166,6 +196,9 @@ export default class Login extends Component{
                             <View style={styles.formTop}>
                                 <View style={styles.formInputLeft}></View>
                                 <View style={styles.formInputCenter}>
+                                    <Loading
+                                        isLoad = {this.state.loading}
+                                    />
                                     <View style={styles.formInput}>
                                         <Text style={styles.formLabel}>SCHOOL</Text>
                                         <TextInput onChangeText={(text)=>{this.setState({xAppId:text})}} style={styles.formTextInput} value={this.state.xAppId} />

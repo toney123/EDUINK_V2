@@ -7,7 +7,8 @@ import SideMenu from 'react-native-side-menu';
 import LeftDrawer from './left-drawer';
 import TopNavBar from '../../component/top-nav-bar';
 import {host} from '../../util/constant';
-import InfoFlow from './info-flow';
+import News from '../news/index';
+import Notice from '../notice/index';
 import Calendars from '../calendar/index';
 import Absentee from '../absentee/index';
 import My from '../my';
@@ -126,16 +127,14 @@ export default class TopNav extends Component{
         switch (this.props.contentType) {
             case 'News':
                 content = (
-                    <InfoFlow
-                        type='news'
+                    <News
                         navigation = {this.props.navigation}
                     />
                 );
                 break;
             case 'Notices':
                 content = (
-                    <InfoFlow
-                        type='notices'
+                    <Notice
                         navigation = {this.props.navigation}
                     />
                 );
