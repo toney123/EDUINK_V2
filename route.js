@@ -29,8 +29,7 @@ const MainStack = createStackNavigator({
   NewsDetail:{screen:NewsDetail},
   NoticeDetail:{screen:NoticeDetail}
 },{
-  // initialRouteName:'Main',
-  initialRouteName:'NoticeDetail',
+  initialRouteName:'Main',
   defaultNavigationOptions:{
     header:null
   }
