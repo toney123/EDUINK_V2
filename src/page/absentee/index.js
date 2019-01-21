@@ -33,12 +33,13 @@ const styles = StyleSheet.create({
         flexDirection:'row'
     },
     absenteeTitleLeft:{
-        flex:6,
+        flex:5,
         flexDirection:'row',
         alignItems:'center',
     },
     absenteeTitleRight:{
-        flex:1
+        flex:1,
+        justifyContent:'center'
     },
     absenteeBottom:{
         flex:2,
@@ -108,6 +109,10 @@ export default class Index extends Component{
         });
     }
 
+    // async _getAbsentee(){
+
+    // }
+
     
     componentWillMount(){
         this._getAbsentee();
@@ -144,6 +149,10 @@ export default class Index extends Component{
                     );
                 }
 
+                // new Date(absentee.absentFrom).toTimeString();
+
+                // console.log(absentee.absentFrom,new Date(absentee.absentFrom).toDateString());
+
 
                 absentees.push(
                     <TouchableOpacity key={absentee._id} style={styles.absentee} onPress={()=>this.props.navigation.navigate('AbsenteeNoteDetail',{
@@ -158,11 +167,10 @@ export default class Index extends Component{
                         <View style={styles.absenteeTop}>
                             <View style={styles.absenteeTitle}>
                                 <View style={styles.absenteeTitleLeft}>
-                                    <Text style={styles.absenteeTitleLeftText}>Leave</Text>
-                                    {sign}
+                                    <Text style={styles.absenteeTitleLeftText}>{absentee.user.firstName+' '+absentee.user.lastName}</Text>
                                 </View>
                                 <View style={styles.absenteeTitleRight}>
-                                    <Image style={{width:30,height:30,borderRadius:30}} source={require(imageUri+'avatar-default.jpg')}></Image>
+                                    {sign}
                                 </View>
                             </View>
                         </View>

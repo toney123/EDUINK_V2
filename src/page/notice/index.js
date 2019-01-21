@@ -94,6 +94,8 @@ export default class Notice extends Component{
                 },
             });
 
+            console.log(response);
+
             const isResponse = response._bodyText != '' ? true : false;
 
             if(response.status == 200){

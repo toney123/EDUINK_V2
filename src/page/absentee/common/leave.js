@@ -66,7 +66,7 @@ export default class Leave extends Component{
         return(
             <View style={styles.leave}>
                 <View style={styles.leaveTop}>
-                    <Text style={styles.excuseText}>Excuse</Text>
+                    <Text style={styles.excuseText}>Absenteee notes</Text>
                 </View>
                 <View style={styles.cutLine}></View>    
                 <View style={styles.leaveBottom}>

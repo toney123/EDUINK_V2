@@ -86,7 +86,7 @@ export default class Index extends Component{
     }
 
 
-    async _getNews(isNextPage = false){
+    async _sendGetNews(isNextPage = false){
         
         try {
             const response = await fetch(host+'/grd/children/'+global.childrenId+'/news'+'?p='+pageIndex, {
@@ -97,31 +97,32 @@ export default class Index extends Component{
                 },
             });
 
-            console.log(response);
-
-            const responseJson = JSON.parse(response._bodyInit);
-
+            const isResponse = response._bodyText !='' ? true:false;
+            
             if(response.status == 200){
+                // 获取总页数
+                pageTotalNum = response.headers.map['x-total-pages'];
 
-                pageTotalNum = response.headers.map['x-total-count'];
-
-                this.setState({
-                    news:isNextPage ? this.state.news.concat(responseJson) : responseJson
-                });
+                if(isResponse){
+                    const responseJson = JSON.parse(response._bodyInit);
+                    this.setState({
+                        news:isNextPage ? this.state.news.concat(responseJson) : responseJson
+                    });
+                }
                 
             }else{
-
+                if(isResponse){
+                    alert(JSON.parse(response._bodyText).message);
+                }
             }
             
         } catch (error) {
             alert(error);
         }
-
-        console.log(this.state.news);
     }
 
 
-    async _onRefresh(){
+    async _getNews(){
         this.setState({
             loading:true
         });
@@ -129,7 +130,7 @@ export default class Index extends Component{
         // 默认第一页
         pageIndex = 0;
 
-        await this._getNews();
+        await this._sendGetNews();
 
         this.setState({
             loading:false
@@ -137,10 +138,9 @@ export default class Index extends Component{
     }
 
 
-    onEndReached = ()=>{
+    async _onEndReached(){
         // 存在总页数
         if(pageTotalNum != undefined){
-            console.log(pageIndex,pageTotalNum);
             // 还有页数
             if(pageIndex <= pageTotalNum){
                 ++pageIndex;
@@ -149,7 +149,11 @@ export default class Index extends Component{
                     showFooter:1
                 });
 
-                this._getNews(true);
+                await this._sendGetNews(true);
+
+                this.setState({
+                    showFooter:0
+                });
 
             // 所有数据加载完毕    
             }else{
@@ -163,7 +167,7 @@ export default class Index extends Component{
     }
 
     componentWillMount(){
-        this._onRefresh();
+        this._getNews();
     }
 
 
@@ -173,7 +177,7 @@ export default class Index extends Component{
         return(
             <FlatList 
             data={this.state.news}
-            onRefresh={()=>this._onRefresh()}
+            onRefresh={()=>this._getNews()}
             refreshing={this.state.loading}
             style={{height:1}}
             // 设置自定义key，消除警告
@@ -210,7 +214,7 @@ export default class Index extends Component{
 
             }}
             onEndReachedThreshold={0.01}
-            onEndReached={this.onEndReached}
+            onEndReached={()=>this._onEndReached()}
             renderItem={({item})=>{
 
                 let typeData;

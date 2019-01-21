@@ -63,30 +63,16 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         alignItems:'center',
     },
-    processItemCenter:{
-        flex:6,
-        flexDirection:'row',
-        alignItems:'center',
-    },
-    processItemImage:{
-        width:20,
-        height:20,
-        marginLeft:10,
-    },
-    processItemChildName:{
-        flexWrap:'wrap',
-        flex:4,
-        marginLeft:10
-    },
-    processItemText:{
-        
+    processItemLeftSignText:{
+        color:'#707D8C'
     },
     processItemTimeText:{
         color:'#8F9FB3'
     },
     processItemRight:{
-        flex:2,
-        justifyContent:'center'
+        flex:3,
+        flexDirection:'row',
+        alignItems:'center',
     },
     withdraw:{
         flex:1,
@@ -148,17 +134,12 @@ export default class Detail extends Component{
             process = (
                 <View style={styles.processItem}>
                     <View style={styles.processItemLeft}>
-                        <Image style={{width:15,height:15}} source={require(iconUri+'process.png')} />
-                    </View>
-                    <View style={styles.processItemCenter}>
-                        <Image style={styles.processItemImage} source={require(imageUri+'avatar-default.jpg')} />
-                        <View style={styles.processItemChildName}>
-                            <Text style={styles.processItemText}>{this.props.navigation.getParam('childrenName')+"'s leave awaits review"}</Text>
-                        </View>
-                        
+                        <Text style={styles.processItemLeftSignText}>Create Date: </Text>
                     </View>
                     <View style={styles.processItemRight}>
-                        <Text style={styles.processItemTimeText}>{this.props.navigation.getParam('startDate')}</Text>
+                        <Text style={styles.processItemRightTimeText}>
+                        {this.props.navigation.getParam('startDate')+'('+this.props.navigation.getParam('childrenName')+')'}
+                        </Text>
                     </View>
                 </View>
             );
